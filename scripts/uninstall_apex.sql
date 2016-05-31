@@ -10,9 +10,9 @@ begin
   APEX_APPLICATION_INSTALL.SET_WORKSPACE_ID ( l_workspace_id );
 end;
 /
-@../../apex/application/init.sql
-@../../apex/application/set_environment.sql
-@../../apex/application/delete_application.sql
-@../../apex/application/end_environment.sql
+@apex/application/init.sql
+@apex/application/set_environment.sql
+@apex/application/delete_application.sql
+@apex/application/end_environment.sql
 /
 quit

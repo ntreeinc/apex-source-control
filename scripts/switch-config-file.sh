@@ -8,8 +8,6 @@ ls ./config/ | sed s/apexupdate.conf// | grep -F .conf | sed s/.conf//
 
 cd config
 
-#TODO the user should not have to write .conf at the end of the input
-
 echo -n "Please enter the config file you would like to use: "
 read username
 
@@ -28,3 +26,7 @@ ln -s $conf_file apexupdate.conf
 cd ..
 
 echo "./config/apexupdate.conf now points to ./config/$( readlink ./config/apexupdate.conf )"
+
+echo "The new config file looks like this: "
+
+cat ./config/apexupdate.conf
