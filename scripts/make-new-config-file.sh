@@ -1,0 +1,52 @@
+#!/bin/bash
+#
+# This script is designed to be called from the top level directory of your project and must be placed in the $PROJECT_HOME/scripts/ folder
+
+echo "Creating new config file..."
+
+#TODO make it so that the user is given the option to automatically switch to the new config file after creation
+
+echo -n "Please enter your first name: "
+read name
+if [ -z $name ]; then
+   echo "Please input a value for your name before pressing enter"; exit 1
+fi
+conf_file="$name.conf"
+if [ -e ./config/$conf_file ]; then
+  echo "Sorry, the file ./scripts/$conf_file already exists. Either delete the existing file or choose a different name and try again."; exit 1
+fi
+
+echo -n "Please enter the apexappid you would like to use. This should be chosen very carefully to avoid conflicts with other developers' app ids: "
+read apexappid
+
+echo -n "Please enter the name of your workspace: "
+read workspace_name
+
+echo -n "Please enter the parsing schema for the app you are using: "
+read parsing_schema
+
+echo -n "Please enter your Apex database connection in the following format [Hostname:port/SID]: "
+read database_connection
+
+echo -n "Please enter your username for the given database: "
+read username
+
+echo -n "Please enter your password: "
+read password
+
+if [ ! -d ./config/ ]; then
+  mkdir config
+fi
+
+echo "apexappid=$apexappid" > ./config/$conf_file
+echo "workspace_name=$workspace_name" >> ./config/$conf_file
+echo "database_connection=$database_connection" >> ./config/$conf_file
+echo "username=$username" >> ./config/$conf_file
+echo "password=$password" >> ./config/$conf_file
+echo "parsing_schema=$parsing_schema" >> ./config/$conf_file
+
+echo "Config file successfully generated! It looks like this:"
+
+cat ./config/$conf_file
+
+echo "If anything looks wrong you can simply edit the file yourself at ./config/$conf_file"
