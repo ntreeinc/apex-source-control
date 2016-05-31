@@ -1,0 +1,41 @@
+{
+  "name": "apex-source-control",
+  "version": "1.0.0",
+  "description": "Scripts for bringing Oracle Application Express apps into source control",
+  "main": "index.js",
+  "bin" : {
+     "apex-update" : "scripts/apexupdate.sh",
+     "check-conf-file" : "scripts/check_conf_file.sh",
+     "new-conf-file" : "scripts/make-new-config-file.sh",
+     "switch-conf-file" : "scripts/switch-config-file.sh"
+  },
+  "scripts": {
+    "test": "echo teammates all left before they had to buy a round",
+    "env" : "env",
+    "apex-to-file" : "check-conf-file && apex-update",
+    "file-to-apex" : "check-conf-file && source config/apexupdate.conf && cd non-apex/install && sqlplus $username/$password@$database_connection @install_apex.sql $apexappid $workspace_name $parsing_schema",
+    "new-conf-file" : "new-conf-file",
+    "switch-conf-file" : "switch-conf-file",
+    "which-conf-file" : "readlink ./config/apexupdate.conf",
+    "generate-new-app-id" : "check-conf-file && cd non-apex/install && sqlplus $username/$password@$database_connection @generate_new_app_id.sql"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ntreeinc/apex-source-control.git"
+  },
+  "keywords": [
+    "oracle",
+    "apex",
+    "application",
+    "express",
+    "version",
+    "source",
+    "control"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ntreeinc/apex-source-control/issues"
+  },
+  "homepage": "https://github.com/ntreeinc/apex-source-control#readme"
+}
