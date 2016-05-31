@@ -52,10 +52,5 @@ fi
 rm $export_file
 
 mv f$apexappid apex #
-cd apex
 
-#		below line might have to be changed to say @/hom.... instead
-sed -e s!@application!@../../apex/application! < install.sql > ../non-apex/install/install_apex_components.sql
-
-cd ..
-#then run reinstall database
+#now you can update your working copy with changes from your colleagues and reinstall into apex
