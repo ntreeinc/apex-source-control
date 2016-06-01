@@ -10,12 +10,13 @@
      "file-to-apex" : "scripts/file-to-apex",
      "read-conf-file" : "scripts/read-conf-file",
      "generate-app-id" : "scripts/generate-app-id",
-     "uninstall-apex" : "scripts/uninstall-apex"
+     "uninstall-apex" : "scripts/uninstall-apex",
+     "frontrunner" : "scripts/frontrunner"
   },
   "scripts": {
     "test": "echo teammates all left before they had to buy a round",
     "env" : "env",
-    "apex-to-file" : "apex-to-file",
+    "apex-to-file" : "frontrunner apex-to-file",
     "file-to-apex" : "file-to-apex",
     "new-conf-file" : "new-conf-file",
     "switch-conf-file" : "switch-conf-file",

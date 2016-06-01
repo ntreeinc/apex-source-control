@@ -1,0 +1,17 @@
+#!/bin/bash
+
+script_folder=$(dirname $(readlink $0))
+echo $script_folder
+
+case "$1" in
+   'test')
+	echo "MY MIND'S TELLING ME NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO, BUT MAH BAAAHDY, MY BAAAHHHDAY IS TELLING ME YEEEEEEEEES"
+	./scripts/check_conf_file.sh
+	;;
+   'apex-to-file')
+	$script_folder/apex-to-file
+	;;
+   *)
+	echo "bad command big boy"
+	;;
+esac
