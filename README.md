@@ -7,6 +7,7 @@ Ensure you have ojdbc6.jar at $ORACLE_HOME/jdbc/lib
 clone the project
 Create an empty app in apex to get an app id create a config file in ./scripts
 
+##TODO remove all make references in the project
 ## Makefile Commands
 ##### make help
 Display this help text

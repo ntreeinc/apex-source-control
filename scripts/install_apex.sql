@@ -15,6 +15,6 @@ begin
   apex_application_install.generate_offset;
 end;
 /
-@apex/install
+@install.sql
 /
 quit

@@ -22,7 +22,7 @@ read apexappid
 echo -n "Please enter the name of your workspace: "
 read workspace_name
 
-echo -n "Please enter the parsing schema for the app you are using: "
+echo -n "Please enter the parsing schema for the app you are using. Note that parsing schema should be all caps: "
 read parsing_schema
 
 echo -n "Please enter your Apex database connection in the following format [Hostname:port/SID]: "

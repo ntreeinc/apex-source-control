@@ -4,7 +4,7 @@
 
 if [ ! -h ./config/apexupdate.conf ]; then
    echo "Missing symbolic link: $PWD/config/apexupdate.conf"
-   echo "Please use the command 'make switch-config-file' to create the symbolic link ./config/apexupdate.conf to your config file"
+   echo "Please use the command 'npm run switch-conf-file' to create the symbolic link ./config/apexupdate.conf to your config file"
    echo "If you don't have a config file set up you can create one using 'make new-config-file'"
    exit 1
 fi
