@@ -7,12 +7,13 @@
      "apex-update" : "scripts/apexupdate.sh",
      "check-conf-file" : "scripts/check_conf_file.sh",
      "new-conf-file" : "scripts/make-new-config-file.sh",
-     "switch-conf-file" : "scripts/switch-config-file.sh"
+     "switch-conf-file" : "scripts/switch-config-file.sh",
+     "apex-to-file" : "frontrunners/apex-to-file.sh"
   },
   "scripts": {
     "test": "echo teammates all left before they had to buy a round",
     "env" : "env",
-    "apex-to-file" : "check-conf-file && apex-update",
+    "apex-to-file" : "apex-to-file",
     "file-to-apex" : "check-conf-file && source config/apexupdate.conf && cd non-apex/install && sqlplus $username/$password@$database_connection @install_apex.sql $apexappid $workspace_name $parsing_schema",
     "new-conf-file" : "new-conf-file",
     "switch-conf-file" : "switch-conf-file",
