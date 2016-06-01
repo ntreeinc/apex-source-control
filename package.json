@@ -4,20 +4,24 @@
   "description": "Scripts for bringing Oracle Application Express apps into source control",
   "main": "index.js",
   "bin" : {
-     "apex-update" : "scripts/apexupdate.sh",
-     "check-conf-file" : "scripts/check_conf_file.sh",
      "new-conf-file" : "scripts/make-new-config-file.sh",
-     "switch-conf-file" : "scripts/switch-config-file.sh"
+     "switch-conf-file" : "scripts/switch-config-file.sh",
+     "apex-to-file" : "frontrunners/apex-to-file.sh",
+     "file-to-apex" : "frontrunners/file-to-apex.sh",
+     "read-conf-file" : "frontrunners/read-conf-file.sh",
+     "generate-app-id" : "frontrunners/generate-app-id.sh",
+     "uninstall-apex" : "frontrunners/uninstall-apex.sh"
   },
   "scripts": {
     "test": "echo teammates all left before they had to buy a round",
     "env" : "env",
-    "apex-to-file" : "check-conf-file && apex-update",
-    "file-to-apex" : "check-conf-file && source config/apexupdate.conf && cd non-apex/install && sqlplus $username/$password@$database_connection @install_apex.sql $apexappid $workspace_name $parsing_schema",
+    "apex-to-file" : "apex-to-file",
+    "file-to-apex" : "file-to-apex",
     "new-conf-file" : "new-conf-file",
     "switch-conf-file" : "switch-conf-file",
-    "which-conf-file" : "readlink ./config/apexupdate.conf",
-    "generate-new-app-id" : "check-conf-file && cd non-apex/install && sqlplus $username/$password@$database_connection @generate_new_app_id.sql"
+    "read-conf-file" : "read-conf-file",
+    "generate-new-app-id" : "generate-app-id",
+    "uninstall-apex" : "uninstall-apex"
   },
   "repository": {
     "type": "git",
