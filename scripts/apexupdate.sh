@@ -53,4 +53,10 @@ rm $export_file
 
 mv f$apexappid apex #
 
+cd apex/
+
+sed s^@application^@apex/application^ < install.sql > temp.sql
+rm -f install.sql
+mv temp.sql install.sql
+
 #now you can update your working copy with changes from your colleagues and reinstall into apex
