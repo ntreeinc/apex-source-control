@@ -9,7 +9,8 @@
      "apex-to-file" : "frontrunners/apex-to-file.sh",
      "file-to-apex" : "frontrunners/file-to-apex.sh",
      "read-conf-file" : "frontrunners/read-conf-file.sh",
-     "generate-app-id" : "frontrunners/generate-app-id.sh"
+     "generate-app-id" : "frontrunners/generate-app-id.sh",
+     "uninstall-apex" : "frontrunners/uninstall-apex.sh"
   },
   "scripts": {
     "test": "echo teammates all left before they had to buy a round",
@@ -19,7 +20,8 @@
     "new-conf-file" : "new-conf-file",
     "switch-conf-file" : "switch-conf-file",
     "read-conf-file" : "read-conf-file",
-    "generate-new-app-id" : "generate-app-id"
+    "generate-new-app-id" : "generate-app-id",
+    "uninstall-apex" : "uninstall-apex"
   },
   "repository": {
     "type": "git",
