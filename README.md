@@ -6,7 +6,7 @@ If you have questions about workflow or any other concepts you should look for a
 ## Setup
 #### Required files and environment variables
 For these scripts to work you need the APEXExport.class and APEXExportSplitter.class which come with [APEX] (http://www.oracle.com/technetwork/developer-tools/apex/downloads/index.html) as well as [ojdbc6.jar] (http://www.oracle.com/technetwork/apps-tech/jdbc-112010-090769.html) which comes with Oracle database.
-Note: you don't need to have oracle or apex installed locally, you just need the aforementioned files and a particular dir structure.
+Note: you don't need to have oracle or apex installed locally, you just need the aforementioned files and a particular directory structure.
 
 If you've extracted APEX then you need to set the APEX_HOME variable using:
 
@@ -14,7 +14,7 @@ If you've extracted APEX then you need to set the APEX_HOME variable using:
 
 where path/to/apex is the directory where you extracted APEX. You'll probably want to add this to your bash profile.
 
-The scripts will look for the required .class files in $APEX_HOME/utilities/oracle/apex/ so if you're only using the .class files set up the directory structure accordingly.
+The scripts will look for the required .class files in $APEX_HOME/utilities/oracle/apex/ so if you're only using the .class files set up the directory structure and APEX_HOME variable accordingly.
 
 If you have a local installation of Oracle database your ORACLE_HOME variable should already be set so just need to ensure that you have the ojdbc6.jar file at $ORACLE_HOME/jdbc/lib/ojdbc6.jar.
 Otherwise, if you only have the ojdbc6.jar file, make a directory somewhere, set the relevant environment variable using
@@ -23,13 +23,57 @@ Otherwise, if you only have the ojdbc6.jar file, make a directory somewhere, set
 
 and put ojdbc6.jar at $ORACLE_HOME/jdbc/lib/ojdbc6.jar as mentioned before. Again you'll want to add the above line to your bash profile.
 
-#### Setting up required scripts
+#### Setting up from an APEX export file
+Note: If you already have an existing repository for the project you shouldn't use this method of installation, otherwise you may run into excessive version-control noise issues with conflicting object ids . This will likely only work if the the Export with Original IDs option was checked during export.
 
-#### Grabbing the export file
+1) Make a local directory for your application:
 
-#### Splitting the export file
+	mkdir my-project
 
-#### Importing into Apex
+2) Run npm init, follow the given prompts and add the following line to your devDependencies in package.json
+
+	"devDependencies": {
+	    "apex-source-control" : "git+ssh://git@github.com:ntreeinc/apex-source-control.git"
+	},
+
+3) Add the following commands to your scripts in package.json
+
+	"scripts": {
+	   "apex-to-file" : "apex-source-control apex-to-file",
+	   "file-to-apex" : "apex-source-control file-to-apex",
+	   "new-conf-file" : "apex-source-control new-conf-file",
+	   "switch-conf-file" : "apex-source-control switch-conf-file",
+	   "read-conf-file" : "apex-source-control read-conf-file",
+	   "generate-app-id" : "apex-source-control generate-app-id",
+	   "uninstall-apex" : "apex-source-control uninstall-apex"
+	},
+If you want you can change the npm run commands to anything you'd like.
+
+4) cd into node_modules/apex-source-control and run npm install, then link the scripts using the command 'npm link'. You may have to run this command as root.
+
+5) Copy the export file into your project directory
+
+6) Set up your classpath and run APEXExportSplitter
+
+	export CLASSPATH=$APEX_HOME/utilities:$ORACLE_HOME/jdbc/lib/ojdbc6.jar
+	java oracle.apex.APEXExportSplitter $export_file
+
+7) Rename the generated directory to apex/
+
+8) cd into apex/ and run:
+
+	sed s^@application^@apex/application^ < install.sql > temp.sql
+	rm -f install.sql
+	mv temp.sql install.sql
+
+We do this because we need to set the relative path to the install components from the top level directory
+
+From here you can now either set up the project as a git repository or install into apex using 'npm run new-conf-file', enter data as needed; 'npm run switch-conf-file', switch to your new config file; and then 'npm run file-to-apex'.
+
+#### Setting up from another APEX app
+
+
+#### Setting up from a pre-existing repository
 
 ## npm scripts Commands
 ##### npm run apex-to-file
