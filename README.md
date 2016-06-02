@@ -109,7 +109,17 @@ You can now set up the application as a git or other version-control repository.
 
 1) Clone the repository locally
 
-2) Install the dependencies
+2) Use 'npm install' to install dependencies
+
+3) Run the following commands and follow the prompts. This will set up your config file and put the application into your APEX workspace
+
+	npm run new-conf-file 		#create config file with the info of the app you want to use for version control
+	npm run switch-conf-file 	#tell scripts to use the config file you just created
+	npm run file-to-apex 		#download the app locally
+That's it!
+
+When you run 'npm run new-conf-file' you can either enter the info of the app you are already using to develop (your version will be overwritten by the one in version control) or enter in the info of a non-existent app which will be automatically created after running 'npm run file-to-apex'
+
 
 ## npm scripts Commands
 ##### npm run apex-to-file
