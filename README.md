@@ -1,9 +1,18 @@
 # apex-source-control
-Scripts for bringing Oracle Application Express applications into version control, any version control tool may be used. Scripts designed to work for Linux and OSX (Will not work on Windows). These scripts were designed using this paper as reference:
-http://www.rwijk.nl/AboutOracle/psdua.pdf
-. If you have questions about workflow or any other concepts you should look there before posting.
+Scripts for bringing Oracle Application Express applications into version control, any version control tool may be used.
+Scripts are designed to work with Linux and OSX (Will not work on Windows).
+These scripts were designed using [this paper] (http://www.rwijk.nl/AboutOracle/psdua.pdf) as reference.
+If you have questions about workflow or any other concepts you should look for answers there first.
 ## Setup
 #### Required files and environment variables
+For these scripts to work you need the APEXExport.class and APEXExportSplitter.class which come with [APEX] (http://www.oracle.com/technetwork/developer-tools/apex/downloads/index.html) as well as [ojdbc6.jar] (http://www.oracle.com/technetwork/apps-tech/jdbc-112010-090769.html) which comes with Oracle.
+Note: you don't need to have oracle or apex installed locally, you just need the aforementioned files and a particular dir structure.
+
+If you've extracted APEX then you need to set the APEX_HOME variable using:
+
+	export APEX_HOME=/path/to/apex
+
+where path/to/apex is the directory where you extracted APEX
 
 #### Setting up required scripts
 
