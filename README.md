@@ -1,4 +1,4 @@
-# APEX_test_application
+# apex-source-control
 Scripts for bringing Oracle Application Express applications into version control, any version control tool may be used. Scripts designed to work for Linux and OSX (Will not work on Windows). These scripts were designed using this paper as reference:
 http://www.rwijk.nl/AboutOracle/psdua.pdf
 . If you have questions about workflow or any other concepts you should look there before posting.
@@ -30,15 +30,12 @@ Switches which config file is being used
 Outputs the name and contents of the config file currently being used
 
 ###Workflow
-===
 TODO write workflow section 
 
 ###Config File Explained
-===
 May later add this section explaining each of the config parameters
 
 ###Known Issues
-===
 #### Deleting a page will always win merges
 **To Reproduce**: 
 * Have two developers working on different versions of an app (i.e. working on different features to be added).

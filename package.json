@@ -4,18 +4,16 @@
   "description": "Scripts for bringing Oracle Application Express apps into source control",
   "main": "index.js",
   "bin" : {
-     "frontrunner" : "scripts/frontrunner"
+     "apex-source-control" : "scripts/apex-source-control"
   },
   "scripts": {
-    "test": "echo teammates all left before they had to buy a round",
-    "env" : "env",
-    "apex-to-file" : "frontrunner apex-to-file",
-    "file-to-apex" : "frontrunner file-to-apex",
-    "new-conf-file" : "frontrunner new-conf-file",
-    "switch-conf-file" : "frontrunner switch-conf-file",
-    "read-conf-file" : "frontrunner read-conf-file",
-    "generate-app-id" : "frontrunner generate-app-id",
-    "uninstall-apex" : "frontrunner uninstall-apex"
+    "apex-to-file" : "apex-source-control apex-to-file",
+    "file-to-apex" : "apex-source-control file-to-apex",
+    "new-conf-file" : "apex-source-control new-conf-file",
+    "switch-conf-file" : "apex-source-control switch-conf-file",
+    "read-conf-file" : "apex-source-control read-conf-file",
+    "generate-app-id" : "apex-source-control generate-app-id",
+    "uninstall-apex" : "apex-source-control uninstall-apex"
   },
   "repository": {
     "type": "git",
@@ -30,7 +28,7 @@
     "source",
     "control"
   ],
-  "author": "",
+  "author": "Nathan Farrant-Diaz",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ntreeinc/apex-source-control/issues"
