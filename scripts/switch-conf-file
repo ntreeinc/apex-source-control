@@ -14,7 +14,7 @@ read username
 conf_file="$username.conf"
 
 if [ ! -e $conf_file ]; then
-   echo "Sorry, the file ./scripts/$conf_file does not exist. Either create the file using make new-config-file or choose a pre-existing config file."; exit 1
+   echo "Sorry, the file ./scripts/$conf_file does not exist. Either create the file using npm run new-conf-file or choose a pre-existing config file."; exit 1
 fi
 
 if [ -e apexupdate.conf ]; then
