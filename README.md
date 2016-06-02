@@ -5,14 +5,23 @@ These scripts were designed using [this paper] (http://www.rwijk.nl/AboutOracle/
 If you have questions about workflow or any other concepts you should look for answers there first.
 ## Setup
 #### Required files and environment variables
-For these scripts to work you need the APEXExport.class and APEXExportSplitter.class which come with [APEX] (http://www.oracle.com/technetwork/developer-tools/apex/downloads/index.html) as well as [ojdbc6.jar] (http://www.oracle.com/technetwork/apps-tech/jdbc-112010-090769.html) which comes with Oracle.
+For these scripts to work you need the APEXExport.class and APEXExportSplitter.class which come with [APEX] (http://www.oracle.com/technetwork/developer-tools/apex/downloads/index.html) as well as [ojdbc6.jar] (http://www.oracle.com/technetwork/apps-tech/jdbc-112010-090769.html) which comes with Oracle database.
 Note: you don't need to have oracle or apex installed locally, you just need the aforementioned files and a particular dir structure.
 
 If you've extracted APEX then you need to set the APEX_HOME variable using:
 
 	export APEX_HOME=/path/to/apex
 
-where path/to/apex is the directory where you extracted APEX
+where path/to/apex is the directory where you extracted APEX. You'll probably want to add this to your bash profile.
+
+The scripts will look for the required .class files in $APEX_HOME/utilities/oracle/apex/ so if you're only using the .class files set up the directory structure accordingly.
+
+If you have a local installation of Oracle database your ORACLE_HOME variable should already be set so just need to ensure that you have the ojdbc6.jar file at $ORACLE_HOME/jdbc/lib/ojdbc6.jar.
+Otherwise, if you only have the ojdbc6.jar file, make a directory somewhere, set the relevant environment variable using
+
+	export ORACLE_HOME=/path/to/your/dir
+
+and put ojdbc6.jar at $ORACLE_HOME/jdbc/lib/ojdbc6.jar as mentioned before. Again you'll want to add the above line to your bash profile.
 
 #### Setting up required scripts
 
