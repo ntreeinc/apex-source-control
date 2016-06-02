@@ -68,12 +68,48 @@ If you want you can change the npm run commands to anything you'd like.
 
 We do this because we need to set the relative path to the install components from the top level directory
 
-From here you can now either set up the project as a git repository or install into apex using 'npm run new-conf-file', enter data as needed; 'npm run switch-conf-file', switch to your new config file; and then 'npm run file-to-apex'.
+From here you can now either set up the project as a git/subversion/etc. repository or install into apex using 'npm run new-conf-file', enter data as needed; 'npm run switch-conf-file', switch to your new config file; and then 'npm run file-to-apex'.
 
 #### Setting up from another APEX app
 
+1) Make a local directory for your application:
+
+	mkdir my-project
+
+2) Run npm init, follow the given prompts and add the following line to your devDependencies in package.json
+
+	"devDependencies": {
+	    "apex-source-control" : "git+ssh://git@github.com:ntreeinc/apex-source-control.git"
+	},
+
+3) Add the following commands to your scripts in package.json
+
+	"scripts": {
+	   "apex-to-file" : "apex-source-control apex-to-file",
+	   "file-to-apex" : "apex-source-control file-to-apex",
+	   "new-conf-file" : "apex-source-control new-conf-file",
+	   "switch-conf-file" : "apex-source-control switch-conf-file",
+	   "read-conf-file" : "apex-source-control read-conf-file",
+	   "generate-app-id" : "apex-source-control generate-app-id",
+	   "uninstall-apex" : "apex-source-control uninstall-apex"
+	},
+If you want you can change the npm run commands to anything you'd like.
+
+4) cd into node_modules/apex-source-control and run npm install, then link the scripts using the command 'npm link'. You may have to run this command as root.
+
+5) Run the following commands and follow the prompts. The app id, parsing_schema, workspace_name and database connection info should all correspond to the app you want to download.
+	
+	npm run new-conf-file 		#create a config file with the info of the app you want to download
+	npm run switch-conf-file 	#tell scripts to use the config file you just created
+	npm run apex-to-file 		#download the app locally
+
+You can now set up the application as a git or other version-control repository.
 
 #### Setting up from a pre-existing repository
+
+1) Clone the repository locally
+
+2) Install the dependencies
 
 ## npm scripts Commands
 ##### npm run apex-to-file
