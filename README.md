@@ -30,15 +30,15 @@ Switches which config file is being used
 Outputs the name and contents of the config file currently being used
 
 ###Workflow
----
+===
 TODO write workflow section 
 
 ###Config File Explained
----
+===
 May later add this section explaining each of the config parameters
 
 ###Known Issues
----
+===
 #### Deleting a page will always win merges
 **To Reproduce**: 
 * Have two developers working on different versions of an app (i.e. working on different features to be added).
