@@ -12,6 +12,24 @@ case "$1" in
    'apex-to-file')
 	$bin_folder/$script_folder/apex-to-file
 	;;
+   'file-to-apex')
+	$bin_folder/$script_folder/file-to-apex
+	;;
+   'new-conf-file')
+        $bin_folder/$script_folder/new-conf-file
+        ;;
+   'switch-conf-file')
+        $bin_folder/$script_folder/switch-conf-file
+        ;;
+   'read-conf-file')
+        $bin_folder/$script_folder/read-conf-file
+        ;;
+   'generate-app-id')
+        $bin_folder/$script_folder/generate-app-id
+        ;;
+   'uninstall-apex')
+        $bin_folder/$script_folder/uninstall-apex
+        ;;	
    *)
 	echo "bad command"
 	;;
