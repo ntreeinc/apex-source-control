@@ -4,25 +4,18 @@
   "description": "Scripts for bringing Oracle Application Express apps into source control",
   "main": "index.js",
   "bin" : {
-     "new-conf-file" : "scripts/new-conf-file",
-     "switch-conf-file" : "scripts/switch-conf-file",
-     "apex-to-file" : "scripts/apex-to-file",
-     "file-to-apex" : "scripts/file-to-apex",
-     "read-conf-file" : "scripts/read-conf-file",
-     "generate-app-id" : "scripts/generate-app-id",
-     "uninstall-apex" : "scripts/uninstall-apex",
      "frontrunner" : "scripts/frontrunner"
   },
   "scripts": {
     "test": "echo teammates all left before they had to buy a round",
     "env" : "env",
     "apex-to-file" : "frontrunner apex-to-file",
-    "file-to-apex" : "file-to-apex",
-    "new-conf-file" : "new-conf-file",
-    "switch-conf-file" : "switch-conf-file",
-    "read-conf-file" : "read-conf-file",
-    "generate-app-id" : "generate-app-id",
-    "uninstall-apex" : "uninstall-apex"
+    "file-to-apex" : "frontrunner file-to-apex",
+    "new-conf-file" : "frontrunner new-conf-file",
+    "switch-conf-file" : "frontrunner switch-conf-file",
+    "read-conf-file" : "frontrunner read-conf-file",
+    "generate-app-id" : "frontrunner generate-app-id",
+    "uninstall-apex" : "frontrunner uninstall-apex"
   },
   "repository": {
     "type": "git",
