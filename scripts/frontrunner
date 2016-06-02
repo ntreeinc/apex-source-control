@@ -1,17 +1,18 @@
 #!/bin/bash
 
-script_folder=$(dirname $(readlink $0))
-echo $script_folder
+temp=$(readlink $0) #reads the symlink in node_modules/.bin which gives the relative path to the scripts/frontrunner script of this module
+script_folder=$(dirname $temp) #gives the relative path from node_modules/.bin/ to the scripts dir of this module
+bin_folder=$(dirname $0) #gives the absolute path of node_modules/.bin. We will need to call bin_folder/script_folder/some_script to call some_script of this module
+
 
 case "$1" in
    'test')
-	echo "MY MIND'S TELLING ME NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO, BUT MAH BAAAHDY, MY BAAAHHHDAY IS TELLING ME YEEEEEEEEES"
 	./scripts/check_conf_file.sh
 	;;
    'apex-to-file')
-	$script_folder/apex-to-file
+	$bin_folder/$script_folder/apex-to-file
 	;;
    *)
-	echo "bad command big boy"
+	echo "bad command"
 	;;
 esac
