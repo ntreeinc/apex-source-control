@@ -14,7 +14,7 @@ Prerequisites:
 * `sqlplus` on path
 
 ## Usage
-#### Method 1: Setting up from another APEX app
+#### Bring an existing APEX app into source control
 
 1) Make a local directory for your app and in the new directory run npm init and follow the given prompts
 
@@ -46,7 +46,7 @@ If you want you can change the npm run commands (under scripts) to anything you'
 
 You can now set up the application as a git or other version-control repository. Be warned that if you downloaded the app from another developer's copy of the app, or some other version of the app you don't want to overwrite, you should create a new config file and set up a new version of the application.
 
-#### Method 2: Setting up from an APEX export file
+#### Setting up from an APEX export file
 
 1) Make a local directory for your app and in the new directory run npm init and follow the given prompts
 
