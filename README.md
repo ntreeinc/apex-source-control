@@ -35,7 +35,7 @@ Prerequisites:
 
 If you want you can change the npm run commands (under scripts) to anything you'd like.
 
-3) Run the following commands and follow the prompts. The app id, parsing_schema, workspace_name and database connection info should all correspond to the app you want to download.
+3) Run the following commands and follow the prompts. The app id, parsing_schema, workspace_name and database connection info should all correspond to the app you want to download (see <a href="#configuration">Configuration</a> )
 
 	npm install
 	cd node_modules/apex-source-control
@@ -138,7 +138,7 @@ This script also needs your database login info (in order to check app-ids and w
 
 TODO write workflow section 
 
-##Config File Explained
+## Configuration
 Config files are placed in a top level config/ directory.
 Each developer has their own config file with their app data which is then refrenced by a symlink named asc.conf (TODO change symlink name).
 Config files should never be put under version control (unless you want to share connection data for some reason).
