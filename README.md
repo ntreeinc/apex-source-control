@@ -1,8 +1,14 @@
 # apex-source-control
-Scripts for bringing Oracle Application Express applications into version control, any version control tool may be used.
-Scripts are designed to work with Linux and OSX (Will not work on Windows).
+Introducing file-based version-control for Oracle Application Express apps!
+
+* Designed to be used by teams who want to bring their experience in version-control and APEX development together.
+* Any version-control tool can be used, not just git.
+* Tested on Linux and OSX (Windows not supported)
+
 These scripts were designed using [this paper] (http://www.rwijk.nl/AboutOracle/psdua.pdf) as reference.
-If you have questions about workflow or any other concepts you should look for answers there first.
+There's a lot of good information about directory structure and general developer workflow so it's definitely worth a read.
+
+It should be noted that if you decide to read the paper we have changed the names/functions of the scripts slightly: file-to-apex=install_apex.sql; uninstall-apex=uninstall_apex.sql; and apex-to-file=apexupdate.sh (Except we don't auto-update using subversion in order to leave more user freedom)
 ## Setup
 #### Required files and environment variables
 For these scripts to work you need the APEXExport.class and APEXExportSplitter.class which come with [APEX] (http://www.oracle.com/technetwork/developer-tools/apex/downloads/index.html) as well as [ojdbc6.jar] (http://www.oracle.com/technetwork/apps-tech/jdbc-112010-090769.html) which comes with Oracle database.
