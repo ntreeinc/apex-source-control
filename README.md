@@ -106,7 +106,7 @@ If you want you can change the npm run commands to anything you'd like.
 	npm run switch-conf-file 	#tell scripts to use the config file you just created
 	npm run apex-to-file 		#download the app locally
 
-You can now set up the application as a git or other version-control repository.
+You can now set up the application as a git or other version-control repository. Be warned that if you downloaded the app from another developer's copy of the app, or some other version of the app you don't want to overwrite you should create a new config file and set up a new version of the application.
 
 #### Setting up from a pre-existing repository
 
@@ -139,10 +139,14 @@ Creates a new config file using user input. NOTE: As of right now you must run '
 Switches which config file is being used
 ##### npm run read-conf-file
 Outputs the name and contents of the config file currently being used
+##### npm run generate-app-id
+Logs into your database and automatically generates and unused app-id in order to avoid accidentaly overwritting someone else's app.
+
+Note: As of right now the app-id will not automatically be written to your config file (TODO) so you must manually input the number the program gives you.
+This script also needs your database login info (in order to check app-ids and whatnot) so your config file must be set up before it can be run. 
 
 ###Workflow & Project Sanitation
-* Ignore config files in version control (.gitignore for git)
-Your config files 
+* Ignore config files in version control (.gitignore for git) since you'll likely not want to share login info in version control
 
 TODO write workflow section 
 
