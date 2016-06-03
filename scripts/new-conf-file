@@ -25,7 +25,7 @@ read workspace_name
 echo -n "Please enter the parsing schema for the app you are using. Note that parsing schema should be all caps: "
 read parsing_schema
 
-echo "NOTE: The app_alias variable should only be set for well known versions of the app (i.e. production or some dev versions) in order to avoid potentially damaging conflicts"
+echo "NOTE: The app_alias variable should only be set for well known versions of the app (i.e. production or some dev versions) in order to avoid potentially damaging conflicts. Press [ENTER] to leave the variable unset"
 echo -n "Please enter the app_alias for your app: "
 read app_alias
 

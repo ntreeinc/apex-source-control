@@ -3,7 +3,7 @@ declare
   p_application_id    NUMBER := '&1';
   p_workspace_name    varchar2(255) := '&2';
   p_parsing_schema    varchar2(255) := '&3';
-  p_app_alias	      varchar2(255) := '$4';
+  p_app_alias	      varchar2(255) := '&4';
   l_workspace_id      NUMBER;
 begin
   apex_application_install.set_application_id ( p_application_id );
