@@ -13,7 +13,7 @@ Prerequisites:
 * An `export ORACLE_HOME` with an existing `$ORACLE_HOME/jdbc/lib/jdbc6.jar` 
 * `sqlplus` on path
 
-## Installation
+## Usage
 #### Method 1: Setting up from another APEX app
 
 1) Make a local directory for your app and in the new directory run npm init and follow the given prompts
