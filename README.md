@@ -86,9 +86,7 @@ The CLASSPATH variable does not need to be added to your bash profile
 
 8) cd into apex/ and run:
 
-	sed s^@application^@apex/application^ < install.sql > temp.sql
-	rm -f install.sql
-	mv temp.sql install.sql
+	sed -i 's^@application^@apex/application^g' install.sql
 
 We do this because we need to set the relative path to the install components from the top level directory
 
