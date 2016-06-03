@@ -5,6 +5,6 @@ source config/asc.conf || exit 1
 if [ -z $app_alias ]; then
    #call install_apex with an empty app_alias string (will ask for user input otherwise)
    sqlplus $username/$password@$database_connection @$script_folder/install_apex.sql $apexappid $workspace_name $parsing_schema '' || exit 1
-then
+else
    sqlplus $username/$password@$database_connection @$script_folder/install_apex.sql $apexappid $workspace_name $parsing_schema $app_alias || exit 1
 fi
