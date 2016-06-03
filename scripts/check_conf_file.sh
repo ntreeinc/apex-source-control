@@ -2,16 +2,16 @@
 #
 # This script is designed to be run from the top level directory of your project and will break if called from anywhere else
 
-if [ ! -h ./config/apexupdate.conf ]; then
-   echo "Missing symbolic link: $PWD/config/apexupdate.conf"
-   echo "Please use the command 'npm run switch-conf-file' to create the symbolic link ./config/apexupdate.conf to your config file"
+if [ ! -h ./config/asc.conf ]; then
+   echo "Missing symbolic link: $PWD/config/asc.conf"
+   echo "Please use the command 'npm run switch-conf-file' to create the symbolic link ./config/asc.conf to your config file"
    echo "If you don't have a config file set up you can create one using 'npm run new-config-file'"
    exit 1
 fi
 
-echo "Using the config file at: $(readlink config/apexupdate.conf)"
+echo "Using the config file at: $(readlink config/asc.conf)"
 
-source ./config/apexupdate.conf
+source ./config/asc.conf
 
 if [ -z "$apexappid" ]; then
    echo "Missing config: $apexappid apexappid"; exit 1

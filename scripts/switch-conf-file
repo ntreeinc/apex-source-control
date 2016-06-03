@@ -4,7 +4,7 @@
 
 echo "The availible config files are:"
 
-ls ./config/ | sed s/apexupdate.conf// | grep -F .conf | sed s/.conf//
+ls ./config/ | sed s/asc.conf// | grep -F .conf | sed s/.conf//
 
 cd config
 
@@ -17,16 +17,16 @@ if [ ! -e $conf_file ]; then
    echo "Sorry, the file ./scripts/$conf_file does not exist. Either create the file using npm run new-conf-file or choose a pre-existing config file."; exit 1
 fi
 
-if [ -e apexupdate.conf ]; then
-   rm apexupdate.conf
+if [ -e asc.conf ]; then
+   rm asc.conf
 fi
 
-ln -s $conf_file apexupdate.conf
+ln -s $conf_file asc.conf
 
 cd ..
 
-echo "./config/apexupdate.conf now points to ./config/$( readlink ./config/apexupdate.conf )"
+echo "./config/asc.conf now points to ./config/$( readlink ./config/asc.conf )"
 
 echo "The new config file looks like this: "
 
-cat ./config/apexupdate.conf
+cat ./config/asc.conf

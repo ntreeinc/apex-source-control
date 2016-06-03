@@ -24,7 +24,7 @@ if [ ! -e $APEX_HOME/utilities/oracle/apex/APEXExportSplitter.class ]; then
    echo "Missing APEXExportSplitter class. Please ensure you are using Apex 5 or above and have the APEXExport and APEXExportSplitter classes are in the $APEX_HOME/utilities/oracle/apex/ directory"; exit 1
 fi
 
-source ./config/apexupdate.conf
+source ./config/asc.conf
 
 export CLASSPATH=$APEX_HOME/utilities:$ORACLE_HOME/jdbc/lib/ojdbc6.jar
 
