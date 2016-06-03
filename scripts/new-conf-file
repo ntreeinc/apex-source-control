@@ -25,6 +25,10 @@ read workspace_name
 echo -n "Please enter the parsing schema for the app you are using. Note that parsing schema should be all caps: "
 read parsing_schema
 
+echo "NOTE: The app_alias variable should only be set for well known versions of the app (i.e. production or some dev versions) in order to avoid potentially damaging conflicts"
+echo -n "Please enter the app_alias for your app: "
+read app_alias
+
 echo -n "Please enter your Apex database connection in the following format [Hostname:port/SID]: "
 read database_connection
 
@@ -40,10 +44,11 @@ fi
 
 echo "apexappid=$apexappid" > ./config/$conf_file
 echo "workspace_name=$workspace_name" >> ./config/$conf_file
+echo "parsing_schema=$parsing_schema" >> ./config/$conf_file
+echo "app_alias=$app_alias" >> ./config/$conf_file
 echo "database_connection=$database_connection" >> ./config/$conf_file
 echo "username=$username" >> ./config/$conf_file
 echo "password=$password" >> ./config/$conf_file
-echo "parsing_schema=$parsing_schema" >> ./config/$conf_file
 
 echo "Config file successfully generated! It looks like this:"
 

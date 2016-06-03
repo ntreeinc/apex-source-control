@@ -3,12 +3,18 @@ declare
   p_application_id    NUMBER := '&1';
   p_workspace_name    varchar2(255) := '&2';
   p_parsing_schema    varchar2(255) := '&3';
+  p_app_alias	      varchar2(255) := '$4';
   l_workspace_id      NUMBER;
 begin
-  --TODO make the alias an optional value in the config
   apex_application_install.set_application_id ( p_application_id );
   apex_application_install.set_schema( p_parsing_schema );
-  apex_application_install.set_application_alias( 'F' || p_application_id );
+  
+  IF p_app_alias is null THEN
+  	apex_application_install.set_application_alias( 'F' || p_application_id );
+  ELSE
+	apex_application_install.set_application_alias( p_app_alias );
+  END IF;
+
   l_workspace_id := apex_util.find_security_group_id (p_workspace => p_workspace_name);
   APEX_APPLICATION_INSTALL.SET_WORKSPACE_ID ( l_workspace_id );
   --apex_application_install.set_offset( p_offset_num );
