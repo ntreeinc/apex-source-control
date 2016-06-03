@@ -1,8 +1,8 @@
 # apex-source-control
 Introducing file-based version-control for Oracle Application Express apps!
 
-* Designed to be used by teams who want to bring their experience in version-control and APEX development together.
-* Any version-control tool can be used, not just git.
+* Designed to be used by teams who want to bring their experience in version-control and APEX development together
+* Any version-control tool can be used, not just git
 * Tested on Linux and OSX (Windows not supported)
 
 ## Getting Started
@@ -11,6 +11,7 @@ Prerequisites:
 * An `export APEX_HOME` with `$APEX_HOME/utilities/oracle/apex/*.class` being the location of the above mentioned files
 * An installation of [Oracle Instant Client](http://www.oracle.com/technetwork/database/features/instant-client/index-100365.html)
 * An `export ORACLE_HOME` with an existing `$ORACLE_HOME/jdbc/lib/jdbc6.jar` 
+* `sqlplus` on path
 
 ## Installation
 #### Method 1: Setting up from another APEX app
@@ -126,22 +127,41 @@ Currently not an availible command, may be added in the future.
 ##### npm run new-conf-file
 Creates a new config file using user input. NOTE: As of right now you must run 'npm run switch-conf-file' command to change to the new config file after creating a new one
 ##### npm run switch-conf-file
-Switches which config file is being used
+Switches the symlink to the config file of user's choice
 ##### npm run read-conf-file
 Outputs the name and contents of the config file currently being used
 ##### npm run generate-app-id
 Logs into your database and automatically generates and unused app-id in order to avoid accidentaly overwritting someone else's app.
+Can only be run if your config file is set up with proper database login info (apexappid, parsing_schema & workspace_name not needed).
 
 Note: As of right now the app-id will not automatically be written to your config file (TODO) so you must manually input the number the program gives you.
-This script also needs your database login info (in order to check app-ids and whatnot) so your config file must be set up before it can be run. 
+This script also needs your database login info (in order to check app-ids and whatnot) so your config file must be set up before it can be run.
 
 ###Workflow & Project Sanitation
 * Ignore config files in version control (.gitignore for git) since you'll likely not want to share login info in version control
 
 TODO write workflow section 
 
-###Config File Explained
-May later add this section explaining each of the config parameters
+##Config File Explained
+Config files are placed in a top level config/ directory.
+Each developer has their own config file with their app data which is then refrenced by a symlink named apexupdate.conf (TODO change symlink name).
+Config files should never be put under version control (unless you want to share connection data for some reason).
+##### apexappid
+The unique application id # of your APEX app in Oracle.
+Used to tell APEX which application to export.
+
+The application id does not have to already exist in APEX in order to be installed by `npm run file-to-apex` but must not conflict with an app id in a different workspace.
+It can be the same as a pre-existing APEX app in the same workspace, but be careful about overwriting work that isn't your own.
+##### workspace_name
+Name of the workspace where the app is installed or is to be installed to.
+The workspace should already exist before usage
+##### database_connection
+The database_connection info in [JDBC](http://www.orafaq.com/wiki/JDBC) format, i.e. Hostname:Port/SID. Example: `myhost:1521/orcl`.
+Used in connect statements such as `sqlplus $username/$password@$database_connection`
+##### username
+Username of database login
+##### password
+Password of database login
 
 ###Known Issues
 #### Deleting a page will always win merges
