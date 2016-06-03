@@ -30,13 +30,13 @@ Note: If you already have an existing repository for the project you shouldn't u
 
 	mkdir my-project
 
-2) Run npm init, follow the given prompts and add the following line to your devDependencies in package.json
+2) In the new directory run npm init and follow the given prompts, then add the following line to your devDependencies in package.json
 
 	"devDependencies": {
 	    "apex-source-control" : "git+ssh://git@github.com:ntreeinc/apex-source-control.git"
 	},
 
-3) Add the following commands to your scripts in package.json
+3) Run npm install and then add the following commands to your scripts in package.json
 
 	"scripts": {
 	   "apex-to-file" : "apex-source-control apex-to-file",
@@ -57,6 +57,7 @@ If you want you can change the npm run commands to anything you'd like.
 
 	export CLASSPATH=$APEX_HOME/utilities:$ORACLE_HOME/jdbc/lib/ojdbc6.jar
 	java oracle.apex.APEXExportSplitter $export_file
+The CLASSPATH variable does not need to be added to your bash profile
 
 7) Rename the generated directory to apex/
 
@@ -68,6 +69,8 @@ If you want you can change the npm run commands to anything you'd like.
 
 We do this because we need to set the relative path to the install components from the top level directory
 
+9) Remove the old $export_file or place it in a different directory
+
 From here you can now either set up the project as a git/subversion/etc. repository or install into apex using 'npm run new-conf-file', enter data as needed; 'npm run switch-conf-file', switch to your new config file; and then 'npm run file-to-apex'.
 
 #### Setting up from another APEX app
@@ -76,13 +79,13 @@ From here you can now either set up the project as a git/subversion/etc. reposit
 
 	mkdir my-project
 
-2) Run npm init, follow the given prompts and add the following line to your devDependencies in package.json
+2) In the new directory run npm init and follow the given prompts, then add the following line to your devDependencies in package.json
 
 	"devDependencies": {
 	    "apex-source-control" : "git+ssh://git@github.com:ntreeinc/apex-source-control.git"
 	},
 
-3) Add the following commands to your scripts in package.json
+3) Run npm install and then add the following commands to your scripts in package.json
 
 	"scripts": {
 	   "apex-to-file" : "apex-source-control apex-to-file",
@@ -137,7 +140,10 @@ Switches which config file is being used
 ##### npm run read-conf-file
 Outputs the name and contents of the config file currently being used
 
-###Workflow
+###Workflow & Project Sanitation
+* Ignore config files in version control (.gitignore for git)
+Your config files 
+
 TODO write workflow section 
 
 ###Config File Explained
