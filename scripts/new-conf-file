@@ -62,8 +62,11 @@ echo -n "Would you like to switch to the new config file now [y/n]: "
 read switch_bool
 
 if [ $switch_bool == "y" ]; then
-   script_folder=$(dirname $0)
-   $script_folder/switch-conf-file $name
+   cd config
+   if [ -e asc.conf ]; then
+      rm asc.conf
+   fi
+   ln -s $conf_file asc.conf
 else
-   echo "Config file was not switch. Run 'npm run switch-conf-file' if you would like to change this."
+   echo "Config file was not switched. Run 'npm run switch-conf-file' if you would like to change this."
 fi
