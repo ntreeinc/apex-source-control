@@ -4,8 +4,6 @@
 
 echo "Creating new config file..."
 
-#TODO make it so that the user is given the option to automatically switch to the new config file after creation
-
 echo -n "Please enter your first name: "
 read name
 if [ -z $name ]; then
@@ -67,6 +65,7 @@ if [ $switch_bool == "y" ]; then
       rm asc.conf
    fi
    ln -s $conf_file asc.conf
+   echo "./config/asc.conf now points to ./config/$( readlink ./config/asc.conf )"
 else
    echo "Config file was not switched. Run 'npm run switch-conf-file' if you would like to change this."
 fi

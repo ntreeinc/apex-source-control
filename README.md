@@ -41,7 +41,7 @@ If you want you can change the npm run commands (under scripts) to anything you'
 	cd node_modules/apex-source-control
 	npm link
 	npm run new-conf-file 		#create a config file with the info of the app you want to download
-	npm run switch-conf-file 	#tell scripts to use the config file you just created
+	npm run switch-conf-file 	#unnecessary if you choose to switch to your new config file in npm run new-conf-file
 	npm run apex-to-file 		#download the app locally
 
 You can now set up the application as a git or other version-control repository. Be warned that if you downloaded the app from another developer's copy of the app, or some other version of the app you don't want to overwrite, you should create a new config file and set up a new version of the application.
@@ -95,7 +95,7 @@ We do this because we need to set the relative path to the install components fr
 From here you can now either set up the project as a git/subversion/etc. repository or install into apex using:
 	
 	npm run new-conf-file
-	npm run switch-conf-file
+	npm run switch-conf-file #unnecessary if you choose to switch to your new config file in npm run new-conf-file
 	npm run file-to-apex
 
 ## Working with existing apex-source-control project
@@ -107,7 +107,7 @@ From here you can now either set up the project as a git/subversion/etc. reposit
 3) Run the following commands and follow the prompts. This will set up your config file and put the application into your APEX workspace
 
 	npm run new-conf-file 		#create config file with the info of the app you want to use for version control
-	npm run switch-conf-file 	#tell scripts to use the config file you just created
+	npm run switch-conf-file 	#unnecessary if you choose to switch to your new config file in npm run new-conf-file
 	npm run file-to-apex 		#download the app locally
 That's it!
 
@@ -127,8 +127,6 @@ This command will only work with a $PROJECT_HOME/apex/ dir which was generated b
 Uninstall your app from apex
 ##### npm run new-conf-file
 Creates a new config file using user input. 
-
-Note: As of right now you must run `npm run switch-conf-file` command to change to the new config file after creating a new one
 ##### npm run switch-conf-file
 Switches the symlink to the config file of user's choice
 ##### npm run read-conf-file
