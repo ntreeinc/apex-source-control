@@ -61,7 +61,7 @@ read switch_bool
 
 if [ $switch_bool == "y" ]; then
    cd config
-   if [ -e asc.conf ]; then
+   if [ -h asc.conf ]; then
       rm asc.conf
    fi
    ln -s $conf_file asc.conf
