@@ -7,7 +7,7 @@ app_id=$(head -c -1 config/new_app_id.txt | sed -e 's/[[:space:]]*$//')
 
 if [ -h config/asc.conf ]; then
   conf_file=$(readlink ./config/asc.conf)
-  echo "The id '${app_id}' will be written to '${conf_file}'. Is this alright? [y/N]: "
+  echo -n "The id '${app_id}' will be written to '${conf_file}'. Is this alright? [y/N]: "
   read can_write
 
   if [ "${can_write}" == "y" ]; then
