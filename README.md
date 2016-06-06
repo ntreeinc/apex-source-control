@@ -135,9 +135,6 @@ Outputs the name and contents of the config file currently being used
 Logs into your database and automatically generates an unused app-id.
 Used in order to avoid accidentaly overwritting someone else's app.
 Can only be run if your config file is set up with proper database login info (see <a href="#config-file-examples">Config file examples</a>).
-
-Note: As of right now the app-id will not automatically be written to your config file (TODO) so you must manually input the number the program gives you.
-
 ###Workflow & Project Sanitation
 * Ignore config files in version control (.gitignore for git) since you'll likely not want to share login info in version control
 
