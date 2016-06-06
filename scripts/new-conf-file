@@ -13,7 +13,7 @@ if [ -z $name ]; then
 fi
 conf_file="$name.conf"
 if [ -e ./config/$conf_file ]; then
-  echo "Sorry, the file ./scripts/$conf_file already exists. Either delete the existing file or choose a different name and try again."; exit 1
+   echo "Sorry, the file ./scripts/$conf_file already exists. Either delete the existing file or choose a different name and try again."; exit 1
 fi
 
 echo -n "Please enter the apexappid you would like to use. This should be chosen very carefully to avoid conflicts with other developers' app ids: "
@@ -55,3 +55,15 @@ echo "Config file successfully generated! It looks like this:"
 cat ./config/$conf_file
 
 echo "If anything looks wrong you can simply edit the file yourself at ./config/$conf_file"
+
+echo
+
+echo -n "Would you like to switch to the new config file now [y/n]: "
+read switch_bool
+
+if [ $switch_bool == "y" ]; then
+   script_folder=$(dirname $0)
+   $script_folder/switch-conf-file $name
+else
+   echo "Config file was not switch. Run 'npm run switch-conf-file' if you would like to change this."
+fi
