@@ -1,8 +1,7 @@
 {
   "name": "apex-source-control",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "Scripts for bringing Oracle Application Express apps into source control",
-  "main": "index.js",
   "bin" : {
      "apex-source-control" : "scripts/apex-source-control"
   },
@@ -29,7 +28,7 @@
     "control"
   ],
   "author": "Nathan Farrant-Diaz",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/ntreeinc/apex-source-control#known-issues"
   },
