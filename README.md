@@ -19,26 +19,26 @@ Prerequisites:
 1) Make a local directory for your app and in the new directory run `npm init` and follow the given prompts
 
 2) Add the following lines to your devDependencies in package.json (Note: delete or repurpose the pre-existing scripts value)
-
-	"scripts": {
-	   "apex-to-file" : "apex-source-control apex-to-file",
-	   "file-to-apex" : "apex-source-control file-to-apex",
-	   "new-conf-file" : "apex-source-control new-conf-file",
-	   "switch-conf-file" : "apex-source-control switch-conf-file",
-	   "read-conf-file" : "apex-source-control read-conf-file",
-	   "generate-app-id" : "apex-source-control generate-app-id",
-	   "uninstall-apex" : "apex-source-control uninstall-apex"
-	},
-
+```
+"scripts": {
+   "apex-to-file" : "apex-source-control apex-to-file",
+   "file-to-apex" : "apex-source-control file-to-apex",
+   "new-conf-file" : "apex-source-control new-conf-file",
+   "switch-conf-file" : "apex-source-control switch-conf-file",
+   "read-conf-file" : "apex-source-control read-conf-file",
+   "generate-app-id" : "apex-source-control generate-app-id",
+   "uninstall-apex" : "apex-source-control uninstall-apex"
+},
+```
 If you want you can change the npm run commands (under scripts) to anything you'd like.
 
 3) Run the following commands and follow the prompts. The app id, parsing_schema, workspace_name and database connection info should all correspond to the app you want to download (see <a href="#configuration">Configuration</a>)
-
-	npm install --save-dev apex-source-control
-	npm run new-conf-file 		#create a config file with the info of the app you want to download
-	npm run switch-conf-file 	#unnecessary if you choose to switch to your new config file in npm run in previous command
-	npm run apex-to-file 		#download the app locally
-
+```
+npm install --save-dev apex-source-control
+npm run new-conf-file 		#create a config file with the info of the app you want to download
+npm run switch-conf-file 	#unnecessary if you choose to switch to your new config file in npm run in previous command
+npm run apex-to-file 		#download the app locally
+```
 You can now set up the application as a git or other version-control repository. Be warned that if you downloaded the app from another developer's copy of the app, or some other version of the app you don't want to overwrite, you should create a new config file and set up a new version of the application.
 
 #### Setting up from an APEX export file
@@ -46,17 +46,17 @@ You can now set up the application as a git or other version-control repository.
 1) Make a local directory for your app and in the new directory run `npm init` and follow the given prompts
 
 2) Add the following lines to your devDependencies in package.json (Note: delete or repurpose the pre-existing scripts value)
-
-	"scripts": {
-	   "apex-to-file" : "apex-source-control apex-to-file",
-	   "file-to-apex" : "apex-source-control file-to-apex",
-	   "new-conf-file" : "apex-source-control new-conf-file",
-	   "switch-conf-file" : "apex-source-control switch-conf-file",
-	   "read-conf-file" : "apex-source-control read-conf-file",
-	   "generate-app-id" : "apex-source-control generate-app-id",
-	   "uninstall-apex" : "apex-source-control uninstall-apex"
-	},
-
+```
+"scripts": {
+   "apex-to-file" : "apex-source-control apex-to-file",
+   "file-to-apex" : "apex-source-control file-to-apex",
+   "new-conf-file" : "apex-source-control new-conf-file",
+   "switch-conf-file" : "apex-source-control switch-conf-file",
+   "read-conf-file" : "apex-source-control read-conf-file",
+   "generate-app-id" : "apex-source-control generate-app-id",
+   "uninstall-apex" : "apex-source-control uninstall-apex"
+},
+```
 If you want you can change the npm run commands (under scripts) to anything you'd like (see <a href="#npm-scripts-commands">npm scripts Commands</a>).
 
 3) Run `npm install --save-dev apex-source-control`
@@ -64,28 +64,26 @@ If you want you can change the npm run commands (under scripts) to anything you'
 5) Copy the export file into your project directory
 
 6) Set up your classpath and run APEXExportSplitter on the export file
-
-	export CLASSPATH=$APEX_HOME/utilities:$ORACLE_HOME/jdbc/lib/ojdbc6.jar
-	java oracle.apex.APEXExportSplitter $export_file
-	
+```
+export CLASSPATH=$APEX_HOME/utilities:$ORACLE_HOME/jdbc/lib/ojdbc6.jar
+java oracle.apex.APEXExportSplitter $export_file
+```	
 The CLASSPATH variable does not need to be added to your bash profile
 
 7) Rename the generated directory to apex/
 
-8) cd into apex/ and run:
-
-	sed -i 's^@application^@apex/application^g' install.sql
+8) cd into apex/ and run `sed -i 's^@application^@apex/application^g' install.sql`
 
 We do this because we need to set the relative path to the install components from the top level directory
 
 9) Remove the old `$export_file` or place it in a different directory
 
 From here you can now either set up the project as a git/subversion/etc. repository or install into apex using:
-	
-	npm run new-conf-file
-	npm run switch-conf-file #unnecessary if you choose to switch to your new config file in npm run new-conf-file
-	npm run file-to-apex
-
+```
+npm run new-conf-file
+npm run switch-conf-file #unnecessary if you choose to switch to your new config file in npm run new-conf-file
+npm run file-to-apex
+```
 ## Working with existing apex-source-control project
 
 1) Clone the repository locally
@@ -93,10 +91,11 @@ From here you can now either set up the project as a git/subversion/etc. reposit
 2) Use `npm install` to install dependencies
 
 3) Run the following commands and follow the prompts. This will set up your config file and put the application into your APEX workspace
-
-	npm run new-conf-file 		#create config file with the info of the app you want to use for version control
-	npm run switch-conf-file 	#unnecessary if you choose to switch to your new config file in npm run new-conf-file
-	npm run file-to-apex 		#download the app locally
+```
+npm run new-conf-file 		#create config file with the info of the app you want to use for version control
+npm run switch-conf-file 	#unnecessary if you choose to switch to your new config file in npm run new-conf-file
+npm run file-to-apex 		#download the app locally
+```
 That's it!
 
 When you run `npm run new-conf-file` you can either enter the info of the app you are already using to develop (your version will be overwritten by the one in version control) or enter in the info of a non-existent app which will be automatically created after running `npm run file-to-apex` (see <a href="#configuration">Configuration</a>).
@@ -158,35 +157,35 @@ Username of database login
 Password of database login
 #### Config file examples
 A normal developer config file
-
-	apexappid=116
-	workspace_name=TEST_WORKSPACE
-	parsing_schema=PARSER
-	app_alias=
-	database_connection=localhost:1521/xe
-	username=the_coolest_guy
-	password=no_really_the_coolest
-
+```
+apexappid=116
+workspace_name=TEST_WORKSPACE
+parsing_schema=PARSER
+app_alias=
+database_connection=localhost:1521/xe
+username=the_coolest_guy
+password=no_really_the_coolest
+```
 A config file for using `npm run generate-app-id`
-
-	apexappid=
-	workspace_name=
-	parsing_schema=
-	app_alias=
-	database_connection=localhost:1521/xe
-	username=the_coolest_guy
-	password=no_really_the_coolest
-
+```
+apexappid=
+workspace_name=
+parsing_schema=
+app_alias=
+database_connection=localhost:1521/xe
+username=the_coolest_guy
+password=no_really_the_coolest
+```
 A config file for a production version of an app
-
-	apexappid=113
-	workspace_name=PROD_APPS
-	parsing_schema=PARSER
-	app_alias=Hello_World
-	database_connection=localhost:1521/xe
-	username=i_wanna_be_the_very_best
-	password=that_no_one_ever_was
-
+```
+apexappid=113
+workspace_name=PROD_APPS
+parsing_schema=PARSER
+app_alias=Hello_World
+database_connection=localhost:1521/xe
+username=i_wanna_be_the_very_best
+password=that_no_one_ever_was
+```
 ###Known Issues
 #### Deleting a page will always win merges
 **To Reproduce**: 
