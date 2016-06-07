@@ -16,7 +16,7 @@ Prerequisites:
 ## Usage
 #### Bring an existing APEX app into source control
 
-1) Make a local directory for your app and in the new directory run npm init and follow the given prompts
+1) Make a local directory for your app and in the new directory run `npm init` and follow the given prompts
 
 2) Add the following lines to your devDependencies in package.json (Note: delete or repurpose the pre-existing scripts value)
 
@@ -41,14 +41,14 @@ If you want you can change the npm run commands (under scripts) to anything you'
 	cd node_modules/apex-source-control
 	npm link
 	npm run new-conf-file 		#create a config file with the info of the app you want to download
-	npm run switch-conf-file 	#unnecessary if you choose to switch to your new config file in npm run new-conf-file
+	npm run switch-conf-file 	#unnecessary if you choose to switch to your new config file in npm run in previous command
 	npm run apex-to-file 		#download the app locally
 
 You can now set up the application as a git or other version-control repository. Be warned that if you downloaded the app from another developer's copy of the app, or some other version of the app you don't want to overwrite, you should create a new config file and set up a new version of the application.
 
 #### Setting up from an APEX export file
 
-1) Make a local directory for your app and in the new directory run npm init and follow the given prompts
+1) Make a local directory for your app and in the new directory run `npm init` and follow the given prompts
 
 2) Add the following lines to your devDependencies in package.json (Note: delete or repurpose the pre-existing scripts value)
 
@@ -75,7 +75,7 @@ If you want you can change the npm run commands (under scripts) to anything you'
 
 5) Copy the export file into your project directory
 
-6) Set up your classpath and run APEXExportSplitter
+6) Set up your classpath and run APEXExportSplitter on the export file
 
 	export CLASSPATH=$APEX_HOME/utilities:$ORACLE_HOME/jdbc/lib/ojdbc6.jar
 	java oracle.apex.APEXExportSplitter $export_file
@@ -90,7 +90,7 @@ The CLASSPATH variable does not need to be added to your bash profile
 
 We do this because we need to set the relative path to the install components from the top level directory
 
-9) Remove the old $export_file or place it in a different directory
+9) Remove the old `$export_file` or place it in a different directory
 
 From here you can now either set up the project as a git/subversion/etc. repository or install into apex using:
 	
@@ -102,7 +102,7 @@ From here you can now either set up the project as a git/subversion/etc. reposit
 
 1) Clone the repository locally
 
-2) Use 'npm install' to install dependencies
+2) Use `npm install` to install dependencies
 
 3) Run the following commands and follow the prompts. This will set up your config file and put the application into your APEX workspace
 
