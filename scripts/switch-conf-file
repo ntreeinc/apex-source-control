@@ -8,18 +8,22 @@ ls ./config/ | sed s/asc.conf// | sed -n '1!p' #print all conf files
 
 cd config
 
-echo -n "Please enter the config file you would like to use: "
-read conf_file
+if [ -z "${1}" ]; then
+  echo -n "Please enter the config file you would like to use: "
+  read conf_file
+else
+  conf_file="${1}"
+fi
 
-if [ ! -e $conf_file ]; then
-   echo "Sorry, the file ./scripts/$conf_file does not exist. Either create the file using npm run new-conf-file or choose a pre-existing config file."; exit 1
+if [ ! -e "${conf_file}" ]; then
+   echo "Sorry, the file ./scripts/"${conf_file}" does not exist. Either create the file using npm run new-conf-file or choose a pre-existing config file."; exit 1
 fi
 
 if [ -h asc.conf ]; then
    rm asc.conf
 fi
 
-ln -s $conf_file asc.conf
+ln -s "${conf_file}" asc.conf
 
 cd ..
 
