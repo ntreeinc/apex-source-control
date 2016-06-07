@@ -1,18 +1,18 @@
 {
   "name": "apex-source-control",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Scripts for bringing Oracle Application Express apps into source control",
-  "bin" : {
-     "apex-source-control" : "scripts/apex-source-control"
+  "bin": {
+    "apex-source-control": "scripts/apex-source-control"
   },
   "scripts": {
-    "apex-to-file" : "apex-source-control apex-to-file",
-    "file-to-apex" : "apex-source-control file-to-apex",
-    "new-conf-file" : "apex-source-control new-conf-file",
-    "switch-conf-file" : "apex-source-control switch-conf-file",
-    "read-conf-file" : "apex-source-control read-conf-file",
-    "generate-app-id" : "apex-source-control generate-app-id",
-    "uninstall-apex" : "apex-source-control uninstall-apex"
+    "apex-to-file": "apex-source-control apex-to-file",
+    "file-to-apex": "apex-source-control file-to-apex",
+    "new-conf-file": "apex-source-control new-conf-file",
+    "switch-conf-file": "apex-source-control switch-conf-file",
+    "read-conf-file": "apex-source-control read-conf-file",
+    "generate-app-id": "apex-source-control generate-app-id",
+    "uninstall-apex": "apex-source-control uninstall-apex"
   },
   "repository": {
     "type": "git",
