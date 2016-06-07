@@ -4,14 +4,12 @@
 
 echo "The availible config files are:"
 
-ls ./config/ | sed s/asc.conf// | grep -F .conf | sed s/.conf//
+ls ./config/ | sed s/asc.conf// | sed -n '1!p' #print all conf files
 
 cd config
 
 echo -n "Please enter the config file you would like to use: "
-read username
-
-conf_file="$username.conf"
+read conf_file
 
 if [ ! -e $conf_file ]; then
    echo "Sorry, the file ./scripts/$conf_file does not exist. Either create the file using npm run new-conf-file or choose a pre-existing config file."; exit 1

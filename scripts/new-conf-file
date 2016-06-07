@@ -4,12 +4,12 @@
 
 echo "Creating new config file..."
 
-echo -n "Please enter your first name: "
-read name
-if [ -z $name ]; then
-   echo "Please input a value for your name before pressing enter"; exit 1
+echo -n "Please enter the file name of your config file: "
+read conf_file
+if [ -z $conf_file ]; then
+   echo "Please input a value for your config file name before pressing enter"; exit 1
 fi
-conf_file="$name.conf"
+
 if [ -e ./config/$conf_file ]; then
    echo "Sorry, the file ./scripts/$conf_file already exists. Either delete the existing file or choose a different name and try again."; exit 1
 fi
