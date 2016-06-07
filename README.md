@@ -61,22 +61,22 @@ If you want you can change the npm run commands (under scripts) to anything you'
 
 3) Run `npm install --save-dev apex-source-control`
 
-5) Copy the export file into your project directory
+4) Copy the export file into your project directory
 
-6) Set up your classpath and run APEXExportSplitter on the export file
+5) Set up your classpath and run APEXExportSplitter on the export file
 ```
 export CLASSPATH=$APEX_HOME/utilities:$ORACLE_HOME/jdbc/lib/ojdbc6.jar
 java oracle.apex.APEXExportSplitter $export_file
 ```	
 The CLASSPATH variable does not need to be added to your bash profile
 
-7) Rename the generated directory to apex/
+6) Rename the generated directory to apex/
 
-8) cd into apex/ and run `sed -i 's^@application^@apex/application^g' install.sql`
+7) cd into apex/ and run `sed -i 's^@application^@apex/application^g' install.sql`
 
 We do this because we need to set the relative path to the install components from the top level directory
 
-9) Remove the old `$export_file` or place it in a different directory
+8) Remove the old `$export_file` or place it in a different directory
 
 From here you can now either set up the project as a git/subversion/etc. repository or install into apex using:
 ```
