@@ -20,9 +20,6 @@ Prerequisites:
 
 2) Add the following lines to your devDependencies in package.json (Note: delete or repurpose the pre-existing scripts value)
 
-	"devDependencies": {
-	    "apex-source-control" : "git+ssh://git@github.com:ntreeinc/apex-source-control.git"
-	},
 	"scripts": {
 	   "apex-to-file" : "apex-source-control apex-to-file",
 	   "file-to-apex" : "apex-source-control file-to-apex",
@@ -37,9 +34,7 @@ If you want you can change the npm run commands (under scripts) to anything you'
 
 3) Run the following commands and follow the prompts. The app id, parsing_schema, workspace_name and database connection info should all correspond to the app you want to download (see <a href="#configuration">Configuration</a>)
 
-	npm install
-	cd node_modules/apex-source-control
-	npm link
+	npm install --save-dev apex-source-control
 	npm run new-conf-file 		#create a config file with the info of the app you want to download
 	npm run switch-conf-file 	#unnecessary if you choose to switch to your new config file in npm run in previous command
 	npm run apex-to-file 		#download the app locally
@@ -52,9 +47,6 @@ You can now set up the application as a git or other version-control repository.
 
 2) Add the following lines to your devDependencies in package.json (Note: delete or repurpose the pre-existing scripts value)
 
-	"devDependencies": {
-	    "apex-source-control" : "git+ssh://git@github.com:ntreeinc/apex-source-control.git"
-	},
 	"scripts": {
 	   "apex-to-file" : "apex-source-control apex-to-file",
 	   "file-to-apex" : "apex-source-control file-to-apex",
@@ -67,11 +59,7 @@ You can now set up the application as a git or other version-control repository.
 
 If you want you can change the npm run commands (under scripts) to anything you'd like (see <a href="#npm-scripts-commands">npm scripts Commands</a>).
 
-3) Run:
-
-	npm install
-	cd node_modules/apex-source-control
-	npm link
+3) Run `npm install --save-dev apex-source-control`
 
 5) Copy the export file into your project directory
 
