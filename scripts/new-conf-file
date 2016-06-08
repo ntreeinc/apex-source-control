@@ -6,12 +6,12 @@ echo "Creating new config file..."
 
 echo -n "Please enter the file name of your config file: "
 read conf_file
-if [ -z $conf_file ]; then
+if [ -z "${conf_file}" ]; then
    echo "Please input a value for your config file name before pressing enter"; exit 1
 fi
 
-if [ -e ./config/$conf_file ]; then
-   echo "Sorry, the file ./scripts/$conf_file already exists. Either delete the existing file or choose a different name and try again."; exit 1
+if [ -e ./config/"${conf_file}" ]; then
+   echo "Sorry, the file ./scripts/${conf_file} already exists. Either delete the existing file or choose a different name and try again."; exit 1
 fi
 
 echo -n "Please enter the apexappid you would like to use. This should be chosen very carefully to avoid conflicts with other developers' app ids: "
@@ -40,31 +40,31 @@ if [ ! -d ./config/ ]; then
   mkdir config
 fi
 
-echo "apexappid=$apexappid" > ./config/$conf_file
-echo "workspace_name=$workspace_name" >> ./config/$conf_file
-echo "parsing_schema=$parsing_schema" >> ./config/$conf_file
-echo "app_alias=$app_alias" >> ./config/$conf_file
-echo "database_connection=$database_connection" >> ./config/$conf_file
-echo "username=$username" >> ./config/$conf_file
-echo "password=$password" >> ./config/$conf_file
+echo "apexappid=${apexappid}" > ./config/"${conf_file}"
+echo "workspace_name=${workspace_name}" >> ./config/"${conf_file}"
+echo "parsing_schema=${parsing_schema}" >> ./config/"${conf_file}"
+echo "app_alias=${app_alias}" >> ./config/"${conf_file}"
+echo "database_connection=${database_connection}" >> ./config/"${conf_file}"
+echo "username=${username}" >> ./config/"${conf_file}"
+echo "password=${password}" >> ./config/"${conf_file}"
 
 echo "Config file successfully generated! It looks like this:"
 
-cat ./config/$conf_file
+cat ./config/"${conf_file}"
 
-echo "If anything looks wrong you can simply edit the file yourself at ./config/$conf_file"
+echo "If anything looks wrong you can simply edit the file yourself at ./config/${conf_file}"
 
 echo
 
 echo -n "Would you like to switch to the new config file now [y/n]: "
 read switch_bool
 
-if [ $switch_bool == "y" ]; then
+if [ "${switch_bool}" == "y" ]; then
    cd config
    if [ -h asc.conf ]; then
       rm asc.conf
    fi
-   ln -s $conf_file asc.conf
+   ln -s "${conf_file}" asc.conf
    cd ..
    echo "./config/asc.conf now points to ./config/$( readlink ./config/asc.conf )"
 else
