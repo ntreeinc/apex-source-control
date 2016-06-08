@@ -2,8 +2,8 @@
 #
 # This script is designed to be run from the top level directory of your project and will break if called from anywhere else
 
-if [ ! -h ./config/asc.conf ]; then
-   echo "Missing symbolic link: $PWD/config/asc.conf"
+if [ ! -e ./config/asc.conf ]; then
+   echo "Missing or broken symbolic link: $PWD/config/asc.conf"
    echo "Please use the command 'npm run switch-conf-file' to create the symbolic link ./config/asc.conf to your config file"
    echo "If you don't have a config file set up you can create one using 'npm run new-config-file'"
    exit 1
