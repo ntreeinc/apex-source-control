@@ -10,7 +10,7 @@ Prerequisites:
 * APEXExport.class and APEXExportSplitter.class which come with [APEX 5.0] (http://www.oracle.com/technetwork/developer-tools/apex/downloads/index.html) and above
 * An `export APEX_HOME` with `$APEX_HOME/utilities/oracle/apex/*.class` being the location of the above mentioned files
 * An installation of [Oracle Instant Client](http://www.oracle.com/technetwork/database/features/instant-client/index-100365.html)
-* An `export ORACLE_HOME` with an existing `$ORACLE_HOME/jdbc/lib/jdbc6.jar` 
+* An `export ORACLE_HOME` with an existing `$ORACLE_HOME/jdbc/lib/jdbc6.jar` (likely included in installation of Oracle Instant Client)
 * `sqlplus` on path
 
 ## Usage
