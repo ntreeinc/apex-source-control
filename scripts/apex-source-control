@@ -1,36 +1,36 @@
 #!/bin/bash
 
-temp=$(readlink $0) #reads the symlink in node_modules/.bin which gives the relative path to the scripts/frontrunner script of this module
-script_folder=$(dirname $temp) #gives the relative path from node_modules/.bin/ to the scripts dir of this module
-bin_folder=$(dirname $0) #gives the absolute path of node_modules/.bin. We will need to call bin_folder/script_folder/some_script to call some_script of this module
+temp=$(readlink "${0}") #reads the symlink in node_modules/.bin which gives the relative path to the scripts/frontrunner script of this module
+script_folder=$(dirname "${temp}") #gives the relative path from node_modules/.bin/ to the scripts dir of this module
+bin_folder=$(dirname "${0}") #gives the absolute path of node_modules/.bin. We will need to call bin_folder/script_folder/some_script to call some_script of this module
 
 
-case "$1" in
+case "${1}" in
    'test')
 	./scripts/check_conf_file.sh
 	;;
    'apex-to-file')
-	$bin_folder/$script_folder/apex-to-file
+	"${bin_folder}"/"${script_folder}"/apex-to-file
 	;;
    'file-to-apex')
-	$bin_folder/$script_folder/file-to-apex
+	"${bin_folder}"/"${script_folder}"/file-to-apex
 	;;
    'new-conf-file')
-        $bin_folder/$script_folder/new-conf-file
+        "${bin_folder}"/"${script_folder}"/new-conf-file
         ;;
    'switch-conf-file')
-        $bin_folder/$script_folder/switch-conf-file
+        "${bin_folder}"/"${script_folder}"/switch-conf-file
         ;;
    'read-conf-file')
-        $bin_folder/$script_folder/read-conf-file
+        "${bin_folder}"/"${script_folder}"/read-conf-file
         ;;
    'generate-app-id')
-        $bin_folder/$script_folder/generate-app-id
+        "${bin_folder}"/"${script_folder}"/generate-app-id
         ;;
    'uninstall-apex')
-        $bin_folder/$script_folder/uninstall-apex
+        "${bin_folder}"/"${script_folder}"/uninstall-apex
         ;;	
    *)
-	echo "bad command"
+	echo "apex-source-control: bad command"
 	;;
 esac
