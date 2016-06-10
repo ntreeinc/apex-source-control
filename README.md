@@ -129,8 +129,8 @@ TODO write workflow section
 
 ## Configuration
 Config files are placed in a top level config/ directory.
-Each developer has their own config file with their app data which is then refrenced by a symlink named asc.conf (short for apex-source-control.conf).
-Config files should never be put under version control (unless you want to share connection data for some reason).
+Each developer has their own config file with their app data which is then refrenced by a symlink named `asc.conf` (short for apex-source-control.conf).
+Config files should not be put under version control (unless you want to share connection data for some reason).
 ##### apexappid
 The unique application id # of your APEX app in Oracle.
 Used to tell APEX which application to export.
