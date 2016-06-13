@@ -123,9 +123,12 @@ Logs into your database and automatically generates an unused app-id.
 Used in order to avoid accidentaly overwritting someone else's app.
 Can only be run if your config file is set up with proper database login info (see <a href="#config-file-examples">Config file examples</a>).
 ###Workflow & Project Sanitation
-* Ignore config files in version control (.gitignore for git) since you'll likely not want to share login info in version control
-
-TODO write workflow section 
+* Ignore config files in version control (.gitignore for git) since you'll likely not want to share login info in version control.
+If you want to leave the configs in version control then you should at least ignore the asc.conf symlink to avoid unnecessary noise
+* Any non apex files you wish to put into version control along with your apex app should be placed in a project-top-level dir called non-apex
+* After merging your code you should `npm run file-to-apex` and test that the merge didn't break anything
+If you have automated tests you can just run those instead
+* It is good practice to start your day with a merge
 
 ## Configuration
 Config files are placed in a top level config/ directory.
@@ -207,7 +210,8 @@ Be extremely careful when deleting pages and consult with your teammates first
 If you do end up accidently deleting a page then you will have to manually re-add the install lines to the install.sql
 
 #### Random version control noise in application meta-data
-TODO expand this section
+On every commit there will be conflicts within the create_application.sql (and likely some others) which will have to be resolved by hand.
+Unfortunately there is no easy way to avoid this, but as you continue to use this tool you'll be able to quickly identify which files have real changes and which are garbage.
 
 ## Inspiration
 These scripts were designed using [this paper] (http://www.rwijk.nl/AboutOracle/psdua.pdf) as reference.
