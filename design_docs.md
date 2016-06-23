@@ -26,7 +26,7 @@ Here are the pre-existing tools we used to help make these scripts
 
 *APEXExport & APEXExportSplitter*
 
-No docs but here is a quick overview discovered through trial and error and research: Export allows you to export an app from APEX into a large SQL file using the command line, and Splitter splits that large SQL file into multiple files which fit into a nice directory structure.
+No docs for these classes but here is a quick overview discovered through trial & error and research: Export allows you to export an app from APEX into a large SQL file using the command line, and Splitter splits that large SQL file into multiple files which fit into a nice directory structure.
 
 *apex_application_install*
 
