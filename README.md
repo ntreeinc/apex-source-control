@@ -7,6 +7,9 @@ Introducing file-based version-control for Oracle Application Express apps!
 
 ## Getting Started
 Prerequisites:
+* Oracle SQLcl on the path (https://www.oracle.com/database/technologies/appdev/sqlcl.html)
+
+If you don't/can't use SQLcl, this also still supports the legacy tools from APEX 5.  To use them instead of sqlcl, you require:
 * APEXExport.class and APEXExportSplitter.class which come with [APEX 5.0] (http://www.oracle.com/technetwork/developer-tools/apex/downloads/index.html) and above
 * An `export APEX_HOME` with `$APEX_HOME/utilities/oracle/apex/*.class` being the location of the above mentioned files
 * An installation of [Oracle Instant Client](http://www.oracle.com/technetwork/database/features/instant-client/index-100365.html)
