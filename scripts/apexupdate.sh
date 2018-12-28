@@ -4,6 +4,8 @@
 #
 # This script is designed to be run from the top level directory of your project and will break otherwise
 
+function legacy_sqlplus_export {
+    
 if [ -z "${ORACLE_HOME}" ]; then
    echo "Missing environment variable: ORACLE_HOME. Please add the path of your oracle installation to your environment variables under the variable name ORACLE_HOME"; exit 1
 fi
@@ -50,13 +52,38 @@ if [ ! 0 -eq "$?" ]; then
 fi
 
 rm "${export_file}"
+}
 
-mv "f${apexappid}" apex #
+function main {
+    if which -s sql; then
+	source ./config/asc.conf
+	local connect_string="${username}/${password}@${database_connection}"
+	echo Using sqlcl to export app ${apexappid}
+	export_file="f${apexappid}.sql"
 
-cd apex/
+	if [ -d apex/ ]; then
+	    rm -r apex/
+	fi
+	if [ -e "${export_file}" ]; then
+	    rm "${export_file}"
+	fi
+	
+	sql "${connect_string}" @/dev/stdin <<EOF
+apex export -skipExportDate -expOriginalIds -split -splitNoCheckSum -applicationid $apexappid
+EOF
+	if [ -e "${export_file}" ]; then
+	    rm "${export_file}"
+	fi
+    else
+	echo WARNING: Did not find SQLcl. Using legacy APEXExportSplitter instead
+	legacy_sqlplus_export
+    fi
+	
+    mv "f${apexappid}" apex
 
-sed s^@application^@apex/application^ < install.sql > temp.sql
-rm -f install.sql
-mv temp.sql install.sql
+    # fixup install paths.  The tool generates absolute paths
+    sed -E -i 'bak' 's^@(.*/)?application/^@apex/application/^' apex/install.sql
+}
 
-#now you can update your working copy with changes from your colleagues and reinstall into apex
+main
+
