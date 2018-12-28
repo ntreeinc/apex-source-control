@@ -5,9 +5,16 @@ source config/asc.conf || exit 1
 NLS_LANG=.AL32UTF8
 export NLS_LANG
 
+if which -s sql; then
+    sql_cmd=sql
+else
+    echo WARNING: could not find SQLcl \(sql\).  Falling back to sqlplus
+    sql_cmd=sqlplus
+fi
+
 if [ -z "${app_alias}" ]; then
    #call install_apex with an empty app_alias string (will ask for user input otherwise)
-   sqlplus "${username}"/"${password}"@"${database_connection}" @"${script_folder}"/install_apex.sql "${apexappid}" "${workspace_name}" "${parsing_schema}" '' || exit 1
+   ${sql_cmd} "${username}"/"${password}"@"${database_connection}" @"${script_folder}"/install_apex.sql "${apexappid}" "${workspace_name}" "${parsing_schema}" '' || exit 1
 else
-   sqlplus "${username}"/"${password}"@"${database_connection}" @"${script_folder}"/install_apex.sql "${apexappid}" "${workspace_name}" "${parsing_schema}" "${app_alias}" || exit 1
+   ${sql_cmd} "${username}"/"${password}"@"${database_connection}" @"${script_folder}"/install_apex.sql "${apexappid}" "${workspace_name}" "${parsing_schema}" "${app_alias}" || exit 1
 fi

@@ -1,4 +1,3 @@
-spool config/new_app_id.txt
 set serveroutput on
 set feedback off
 begin
@@ -6,5 +5,4 @@ begin
    dbms_output.put_Line(apex_application_install.get_application_id);
 end;
 /
-spool off
 exit
