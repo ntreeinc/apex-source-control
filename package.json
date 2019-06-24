@@ -3,7 +3,7 @@
   "version": "1.2.0",
   "description": "Scripts for bringing Oracle Application Express apps into source control",
   "bin": {
-    "apex-source-control": "scripts/apex-source-control"
+    "apex-source-control": "apex-source-control"
   },
   "scripts": {
     "apex-to-file": "apex-source-control apex-to-file",

@@ -1,0 +1,373 @@
+#!/bin/bash
+
+function die {
+    echo $@
+    exit 1
+}
+
+function run_sql_cmd {
+    local connect_string="${username}/${password}@${database_connection}"
+    local sql_cmd
+    if which sql > /dev/null; then
+        echo Running PWD $PWD
+        sql_cmd="sql -S"
+    else
+        echo WARNING: could not find SQLcl \(sql\).  Falling back to sqlplus
+        sql_cmd="sqlplus -S"
+    fi
+
+    NLS_LANG=.AL32UTF8
+    export NLS_LANG
+
+    ${sql_cmd} ${connect_string} "$@" || die Failed:  ${sql_cmd} ${connect_string} "$@"
+}
+
+function check_conf_file {
+    if [ ! -e ./config/asc.conf ]; then
+        echo "Missing or broken symbolic link: ${PWD}/config/asc.conf"
+        echo "Please use the command 'npm run switch-conf-file' to create the symbolic link ./config/asc.conf to your config file"
+        echo "If you don't have a config file set up you can create one using 'npm run new-config-file'"
+        exit 1
+    fi
+
+    echo "Using the config file at: $(readlink config/asc.conf)"
+
+    source ./config/asc.conf
+
+    [ -z "${apexappid}" ] && die "Missing config: ${apexappid} apexappid"
+    [ -z "${workspace_name}" ] && die "Missing config: ${workspace_name} workspace_name"
+    [ -z "${database_connection}" ] && die "Missing config: ${database_connection} database_connection"
+    [ -z "${username}" ] && die "Missing config: ${username} username"
+    [ -z "${password}" ] && die "Missing config: ${password} password"
+
+    echo "Config file looks good! Moving on to the next step..."
+}
+
+function legacy_apex_export {
+
+    [ -z "${ORACLE_HOME}" ] && die "Missing environment variable: ORACLE_HOME. Please add the path of your oracle installation to your environment variables under the variable name ORACLE_HOME"
+    [ -z "${APEX_HOME}" ] && die "Missing environment variable: APEX_HOME. Please add the path of your apex installation to your environment variables under the variable name APEX_HOME. Note: You should be using APEX version 5 or above"
+    [ ! -e "${ORACLE_HOME}"/jdbc/lib/ojdbc6.jar ] && die "Missing ojdbc6.jar: please download from oracle and put in ${ORACLE_HOME}/jdbc/lib directory"
+    [ ! -e "${APEX_HOME}"/utilities/oracle/apex/APEXExport.class ] && die "Missing APEXExport class. Please ensure you are using Apex 5 or above and have the APEXExport and APEXExportSplitter classes are in the $APEX_HOME/utilities/oracle/apex/ directory"
+    [ ! -e "${APEX_HOME}"/utilities/oracle/apex/APEXExportSplitter.class ] && die "Missing APEXExportSplitter class. Please ensure you are using Apex 5 or above and have the APEXExport and APEXExportSplitter classes are in the $APEX_HOME/utilities/oracle/apex/ directory"
+
+    source ./config/asc.conf
+
+    export CLASSPATH="${APEX_HOME}"/utilities:"${ORACLE_HOME}"/jdbc/lib/ojdbc6.jar
+
+    export_file="f${apexappid}.sql"
+
+    if [ -d apex/ ]; then
+        rm -r apex/
+    fi
+    if [ -e "${export_file}" ]; then
+        rm "${export_file}"
+    fi
+
+    java oracle.apex.APEXExport -db "${database_connection}" -user "${username}" -password "${password}" -applicationid "${apexappid}" -skipExportDate -expOriginalIds ||
+        die "Exit code #: $?. An error has occured while trying to use APEXExport. Please check that your database_connection, username, password, and apexappid variables are all set correctly."
+
+    java oracle.apex.APEXExportSplitter "${export_file}" ||
+        die "Exit code #: $?. An error has occured while trying to use APEXExportSplitter. Please check that your apexappid variable is set correctly and that the application exists in the workspace you are trying to export from"
+
+    rm "${export_file}"
+
+    mv "f${apexappid}" apex #
+
+    sed -i '' s^@application^@apex/application^ apex/install.sql
+}
+
+function apex_export {
+    if which sql > /dev/null; then
+	source ./config/asc.conf
+	echo Using sqlcl to export app ${apexappid}
+	export_file="f${apexappid}.sql"
+
+	if [ -d apex/ ]; then
+	    rm -r apex/
+	fi
+	if [ -e "${export_file}" ]; then
+	    rm "${export_file}"
+	fi
+	
+	run_sql_cmd @/dev/stdin <<EOF
+apex export -skipExportDate -expOriginalIds -split -splitNoCheckSum -applicationid $apexappid
+EOF
+	if [ -e "${export_file}" ]; then
+	    rm "${export_file}"
+	fi
+
+        mv "f${apexappid}" apex
+        
+        # fixup install paths.  The tool generates absolute paths
+        sed -E -i '' 's^@(.*/)?application/^@apex/application/^' apex/install.sql
+    else
+	echo WARNING: Did not find SQLcl. Using legacy APEXExportSplitter instead
+	legacy_apex_export
+    fi
+}
+
+function apex_to_file {
+    check_conf_file || die
+    apex_export || exit 1
+}
+
+function file_to_apex {
+    source config/asc.conf || die No config file at config/asc.conf
+
+    run_sql_cmd @/dev/stdin "${apexappid}" "${workspace_name}" "${parsing_schema}" "${app_alias}" <<EOF || die Failed to install app
+declare
+  p_application_id    NUMBER := '&1';
+  p_workspace_name    varchar2(255) := '&2';
+  p_parsing_schema    varchar2(255) := '&3';
+  p_app_alias	      varchar2(255) := '&4';
+  l_workspace_id      NUMBER;
+begin
+  apex_application_install.set_application_id ( p_application_id );
+  apex_application_install.set_schema( p_parsing_schema );
+  
+  IF p_app_alias is null THEN
+  	apex_application_install.set_application_alias( 'F' || p_application_id );
+  ELSE
+	apex_application_install.set_application_alias( p_app_alias );
+  END IF;
+
+  l_workspace_id := apex_util.find_security_group_id (p_workspace => p_workspace_name);
+  APEX_APPLICATION_INSTALL.SET_WORKSPACE_ID ( l_workspace_id );
+  --apex_application_install.set_offset( p_offset_num );
+  apex_application_install.generate_offset;
+end;
+/
+@apex/install.sql
+/
+quit
+EOF
+
+}
+
+function generate_app_id {
+    source config/asc.conf || die
+
+    tmpfile=$(mktemp -t generate_app_id)
+
+    run_sql_cmd @/dev/stdin <<ENDSQL > ${tmpfile} || exit 1 
+set serveroutput on
+set feedback off
+begin
+   apex_application_install.generate_application_id;
+   dbms_output.put_Line(apex_application_install.get_application_id);
+end;
+/
+exit
+ENDSQL
+
+    app_id=$(cat $tmpfile)
+
+    rm $tmpfile
+
+if [ -h config/asc.conf ]; then
+  conf_file=$(readlink ./config/asc.conf)
+  echo -n "The id '${app_id}' will be written to '${conf_file}'. Is this alright? [y/N]: "
+  read can_write
+
+  if [ "${can_write}" == "y" ]; then
+    sed -i "s/^apexappid=.*/apexappid=${app_id}/" config/${conf_file}
+    echo "apexappid in '${conf_file}' has been replaced with '${app_id}'. The new config file looks like this: "
+    cat config/${conf_file}
+  else
+    echo -n "The generated app id was not written to file. "
+    echo "You can change this manually by changing the apexappid of your config to '${app_id}'"
+  fi
+fi
+
+}
+
+function new_conf_file {
+echo "Creating new config file..."
+
+echo -n "Please enter the file name of your config file: "
+read conf_file
+if [ -z "${conf_file}" ]; then
+   echo "Please input a value for your config file name before pressing enter"; exit 1
+fi
+
+if [ -e ./config/"${conf_file}" ]; then
+   echo "Sorry, the file ./scripts/${conf_file} already exists. Either delete the existing file or choose a different name and try again."; exit 1
+fi
+
+echo -n "Please enter the apexappid you would like to use. This should be chosen very carefully to avoid conflicts with other developers' app ids: "
+read apexappid
+
+echo -n "Please enter the name of your workspace: "
+read workspace_name
+
+echo -n "Please enter the parsing schema for the app you are using. Note that parsing schema should be all caps: "
+read parsing_schema
+
+echo "NOTE: The app_alias variable should only be set for well known versions of the app (i.e. production or some dev versions) in order to avoid potentially damaging conflicts. Press [ENTER] to leave the variable unset"
+echo -n "Please enter the app_alias for your app: "
+read app_alias
+
+echo -n "Please enter your Apex database connection in the following format [Hostname:port/SID]: "
+read database_connection
+
+echo -n "Please enter your username for the given database: "
+read username
+
+echo -n "Please enter your password: "
+read password
+
+if [ ! -d ./config/ ]; then
+  mkdir config
+fi
+
+echo "apexappid=${apexappid}" > ./config/"${conf_file}"
+echo "workspace_name=${workspace_name}" >> ./config/"${conf_file}"
+echo "parsing_schema=${parsing_schema}" >> ./config/"${conf_file}"
+echo "app_alias=${app_alias}" >> ./config/"${conf_file}"
+echo "database_connection=${database_connection}" >> ./config/"${conf_file}"
+echo "username=${username}" >> ./config/"${conf_file}"
+echo "password=${password}" >> ./config/"${conf_file}"
+
+echo "Config file successfully generated! It looks like this:"
+
+cat ./config/"${conf_file}"
+
+echo "If anything looks wrong you can simply edit the file yourself at ./config/${conf_file}"
+
+echo
+
+echo -n "Would you like to switch to the new config file now [y/n]: "
+read switch_bool
+
+if [ "${switch_bool}" == "y" ]; then
+   cd config
+   if [ -h asc.conf ]; then
+      rm asc.conf
+   fi
+   ln -s "${conf_file}" asc.conf
+   cd ..
+   echo "./config/asc.conf now points to ./config/$( readlink ./config/asc.conf )"
+else
+   echo "Config file was not switched. Run 'npm run switch-conf-file' if you would like to change this."
+fi
+}
+
+function switch_conf_file {
+#!/bin/bash
+#
+# This script is designed to be called from the top level directory of your project and to be placed in the ./scripts/ directory
+
+echo "The availible config files are:"
+
+ls ./config/ | sed s/asc.conf// | sed -n '1!p' #print all conf files
+
+cd config
+
+if [ -z "${1}" ]; then
+  echo -n "Please enter the config file you would like to use: "
+  read conf_file
+else
+  conf_file="${1}"
+fi
+
+if [ ! -e "${conf_file}" ]; then
+   echo "Sorry, the file ./scripts/"${conf_file}" does not exist. Either create the file using npm run new-conf-file or choose a pre-existing config file."; exit 1
+fi
+
+if [ -h asc.conf ]; then
+   rm asc.conf
+fi
+
+ln -s "${conf_file}" asc.conf
+
+cd ..
+
+echo "./config/asc.conf now points to ./config/$( readlink ./config/asc.conf )"
+
+echo "The new config file looks like this: "
+
+cat ./config/asc.conf
+}
+
+function unistall_apex {
+    check_conf_file || die
+    source config/asc.conf || exit 1
+    
+    run_sql_cmd @/dev/stdin "${apexappid}" "${workspace_name}" "${parsing_schema}"  <<EOF || die Failed to uninstall
+declare
+  p_application_id    NUMBER := '&1';
+  p_workspace_name    varchar2(255) := '&2';
+  p_parsing_schema    varchar2(255) := '&3';
+  l_workspace_id      NUMBER;
+begin
+  apex_application_install.set_application_id ( p_application_id );
+  l_workspace_id := apex_util.find_security_group_id (p_workspace => p_workspace_name ); 
+  apex_application_install.set_schema( p_parsing_schema );
+  APEX_APPLICATION_INSTALL.SET_WORKSPACE_ID ( l_workspace_id );
+end;
+/
+@apex/application/init.sql
+@apex/application/set_environment.sql
+@apex/application/delete_application.sql
+@apex/application/end_environment.sql
+/
+quit
+
+EOF
+}
+
+# WIPMB is this useful?  Can we delete it?
+function read_conf_file {
+
+if [ ! -e ./config/asc.conf ]; then
+   echo "Missing or broken symbolic link: ${PWD}/config/asc.conf"
+   echo "Please use the command 'npm run switch-conf-file' to create the symbolic link ./config/asc.conf to your config file"
+   echo "If you don't have a config file set up you can create one using 'npm run new-config-file'"
+   exit 1
+fi
+
+echo "The config file currently being used is: "
+readlink ./config/asc.conf
+
+echo
+
+echo "The config file looks like this: "
+cat ./config/asc.conf
+
+echo "If any of the data looks wrong you can simply edit the file yourself at ./config/$(readlink ./config/asc.conf)"
+}
+
+function main {
+case "${1}" in
+   'test')
+	./scripts/check_conf_file.sh
+	;;
+   'apex-to-file')
+       apex_to_file
+	;;
+   'file-to-apex')
+       file_to_apex
+	;;
+   'new-conf-file')
+       new_conf_file
+        ;;
+   'switch-conf-file')
+       switch_conf_file
+        ;;
+   'read-conf-file')
+       read_conf_file
+        ;;
+   'generate-app-id')
+       generate_app_id
+        ;;
+   'uninstall-apex')
+       uninstall_apex
+        ;;	
+   *)
+	echo "apex-source-control: bad command"
+	;;
+esac
+}
+
+main "$@"
