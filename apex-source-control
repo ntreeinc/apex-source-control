@@ -74,7 +74,7 @@ function legacy_apex_export {
 
     mv "f${apexappid}" apex #
 
-    sed -i '' s^@application^@apex/application^ apex/install.sql
+    perl -pi -e 's^\@application^\@apex/application^' apex/install.sql
 }
 
 function apex_export {
@@ -100,7 +100,7 @@ EOF
         mv "f${apexappid}" apex
         
         # fixup install paths.  The tool generates absolute paths
-        sed -E -i '' 's^@(.*/)?application/^@apex/application/^' apex/install.sql
+        perl -pi -e 's^\@/?(.*/)?application/^\@apex/application/^' apex/install.sql
     else
 	echo WARNING: Did not find SQLcl. Using legacy APEXExportSplitter instead
 	legacy_apex_export
@@ -171,7 +171,7 @@ if [ -h config/asc.conf ]; then
   read can_write
 
   if [ "${can_write}" == "y" ]; then
-    sed -i "s/^apexappid=.*/apexappid=${app_id}/" config/${conf_file}
+    perl -pi -e "s/^apexappid=.*/apexappid=${app_id}/" config/${conf_file}
     echo "apexappid in '${conf_file}' has been replaced with '${app_id}'. The new config file looks like this: "
     cat config/${conf_file}
   else
