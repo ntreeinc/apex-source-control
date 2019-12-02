@@ -342,9 +342,6 @@ cat ./config/asc.conf
 echo "If any of the data looks wrong you can simply edit the file yourself at ./config/$(readlink ./config/asc.conf)"
 }
 
-function set_substitution {
-}
-
 function main {
 case "${1}" in
    'test')
@@ -371,8 +368,6 @@ case "${1}" in
    'uninstall-apex')
        uninstall_apex
        ;;
-   set-substitution)
-       set_substitution
    *)
 	echo "apex-source-control: bad command"
 	;;
