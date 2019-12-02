@@ -221,3 +221,11 @@ These scripts were designed using [this paper] (http://www.rwijk.nl/AboutOracle/
 There's a lot of good information about directory structure and general developer workflow so it's definitely worth a read.
 
 It should be noted that if you decide to read the paper we have changed the names/functions of the scripts slightly: file-to-apex=install_apex.sql; uninstall-apex=uninstall_apex.sql; and apex-to-file=apexupdate.sh (Except we don't auto-update using subversion in order to leave more user freedom)
+
+## Developers
+To release:
+
+ - update the version in package.json
+ - tag with matching tag.  E.g. `git tag -a v1.3.2`
+ - deploy to npm repo `npm publish`
+
