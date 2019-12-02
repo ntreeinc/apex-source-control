@@ -5,6 +5,10 @@ function die {
     exit 1
 }
 
+function upcase {
+    echo "$@" | tr '[a-z-]' '[A-Z_]'
+}
+
 function run_sql_cmd {
     local connect_string="${username}/${password}@${database_connection}"
     local sql_cmd
@@ -115,7 +119,7 @@ function apex_to_file {
 function file_to_apex {
     source config/asc.conf || die No config file at config/asc.conf
 
-    run_sql_cmd @/dev/stdin "${apexappid}" "${workspace_name}" "${parsing_schema}" "${app_alias}" <<EOF || die Failed to install app
+    run_sql_cmd @/dev/stdin "${apexappid}" $(upcase "${workspace_name}") $(upcase "${parsing_schema}") $(upcase "${app_alias}") <<EOF || die Failed to install app
 declare
   p_application_id    NUMBER := '&1';
   p_workspace_name    varchar2(255) := '&2';
@@ -338,6 +342,9 @@ cat ./config/asc.conf
 echo "If any of the data looks wrong you can simply edit the file yourself at ./config/$(readlink ./config/asc.conf)"
 }
 
+function set_substitution {
+}
+
 function main {
 case "${1}" in
    'test')
@@ -363,7 +370,9 @@ case "${1}" in
         ;;
    'uninstall-apex')
        uninstall_apex
-        ;;	
+       ;;
+   set-substitution)
+       set_substitution
    *)
 	echo "apex-source-control: bad command"
 	;;
