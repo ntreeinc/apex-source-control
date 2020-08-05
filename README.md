@@ -5,6 +5,11 @@ Introducing file-based version-control for Oracle Application Express apps!
 * Any version-control tool can be used, not just git
 * Tested on Linux and OSX (Windows not supported)
 
+# Obsolete
+This is obsolete now that SQLcl includes the application export functionality.
+Running `apex export -skipExportDate -expOriginalIds -split -splitNoCheckSum -applicationid $apexappid` 
+will give the same result except for replacing absolute paths with relative paths in the scripts for git.
+
 ## Getting Started
 Prerequisites:
 * Oracle SQLcl on the path (https://www.oracle.com/database/technologies/appdev/sqlcl.html)
