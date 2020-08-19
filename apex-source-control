@@ -1,5 +1,40 @@
 #!/bin/bash
 
+function main {
+case "${1}" in
+   'test')
+	./scripts/check_conf_file.sh
+	;;
+   'apex-to-file')
+       apex_to_file
+	;;
+   'file-to-apex')
+       file_to_apex
+	;;
+   'new-conf-file')
+       new_conf_file
+        ;;
+   'switch-conf-file')
+       switch_conf_file
+        ;;
+   'read-conf-file')
+       read_conf_file
+        ;;
+   'generate-app-id')
+       generate_app_id
+        ;;
+   'uninstall-apex')
+       uninstall_apex
+       ;;
+   get-connect-string|connect-string)
+       get_connect_string
+       ;;
+   *)
+	echo "apex-source-control: bad command"
+	;;
+esac
+}
+
 function die {
     echo $@
     exit 1
@@ -9,8 +44,15 @@ function upcase {
     echo "$@" | tr '[a-z-]' '[A-Z_]'
 }
 
-function run_sql_cmd {
+function get_connect_string {
+    source ./config/asc.conf
     local connect_string="${username}/${password}@${database_connection}"
+    echo "${connect_string}"
+}
+
+
+function run_sql_cmd {
+    local connect_string="$(get_connect_string)"
     local sql_cmd
     if which sql > /dev/null; then
         echo Running PWD $PWD
@@ -342,36 +384,5 @@ cat ./config/asc.conf
 echo "If any of the data looks wrong you can simply edit the file yourself at ./config/$(readlink ./config/asc.conf)"
 }
 
-function main {
-case "${1}" in
-   'test')
-	./scripts/check_conf_file.sh
-	;;
-   'apex-to-file')
-       apex_to_file
-	;;
-   'file-to-apex')
-       file_to_apex
-	;;
-   'new-conf-file')
-       new_conf_file
-        ;;
-   'switch-conf-file')
-       switch_conf_file
-        ;;
-   'read-conf-file')
-       read_conf_file
-        ;;
-   'generate-app-id')
-       generate_app_id
-        ;;
-   'uninstall-apex')
-       uninstall_apex
-       ;;
-   *)
-	echo "apex-source-control: bad command"
-	;;
-esac
-}
 
 main "$@"
