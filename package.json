@@ -1,6 +1,6 @@
 {
   "name": "apex-source-control",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Scripts for bringing Oracle Application Express apps into source control",
   "bin": {
     "apex-source-control": "apex-source-control"

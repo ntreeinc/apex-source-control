@@ -137,7 +137,7 @@ function apex_export {
 	fi
 	
 	run_sql_cmd @/dev/stdin <<EOF
-apex export -skipExportDate -expOriginalIds -split -splitNoCheckSum -applicationid $apexappid
+apex export -skipExportDate -expOriginalIds -split -applicationid $apexappid
 EOF
 	if [ -e "${export_file}" ]; then
 	    rm "${export_file}"
