@@ -161,12 +161,13 @@ function apex_to_file {
 function file_to_apex {
     source config/asc.conf || die No config file at config/asc.conf
 
-    run_sql_cmd @/dev/stdin "${apexappid}" $(upcase "${workspace_name}") $(upcase "${parsing_schema}") $(upcase "${app_alias}") <<EOF || die Failed to install app
+    run_sql_cmd @/dev/stdin "${apexappid}" $(upcase "${workspace_name}") $(upcase "${parsing_schema}") $(upcase "${app_alias}") "${offset}" <<EOF || die Failed to install app
 declare
   p_application_id    NUMBER := '&1';
   p_workspace_name    varchar2(255) := '&2';
   p_parsing_schema    varchar2(255) := '&3';
   p_app_alias	      varchar2(255) := '&4';
+  p_offset            NUMBER := '&5';
   l_workspace_id      NUMBER;
 begin
   apex_application_install.set_application_id ( p_application_id );
@@ -180,8 +181,12 @@ begin
 
   l_workspace_id := apex_util.find_security_group_id (p_workspace => p_workspace_name);
   APEX_APPLICATION_INSTALL.SET_WORKSPACE_ID ( l_workspace_id );
-  --apex_application_install.set_offset( p_offset_num );
-  apex_application_install.generate_offset;
+
+  IF p_offset IS NOT NULL THEN
+    apex_application_install.set_offset( p_offset );
+  ELSE
+    apex_application_install.generate_offset;
+  END IF;
 end;
 /
 @apex/install.sql
